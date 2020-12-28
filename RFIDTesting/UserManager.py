@@ -86,6 +86,8 @@ class UserManager:
             for i in range(len(attributes)):
                 attributes[i] = attributes[i].strip()
 
+            print(attributes)
+
             # Checking that the received input is valid
             if num_attributes - 1 != att_ind:
                 print(num_attributes, att_ind)
