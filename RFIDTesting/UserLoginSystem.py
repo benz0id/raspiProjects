@@ -1,3 +1,4 @@
+from datetime import datetime
 import RPi.GPIO as GPIO
 from typing import Tuple, List
 from Reader import Reader
@@ -26,6 +27,8 @@ def check_for_user(data: str) -> Tuple[bool, User]:
         presenter.print("Bad Read")
     except InvalidUserCode:
         presenter.print("User is no longer cleared for access")
+
+    return False, User("", datetime.now(), 0)
 
 
 def handle_received_data(data: str):
