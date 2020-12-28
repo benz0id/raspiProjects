@@ -72,7 +72,7 @@ class UserManager:
         print(user_data)
         try:
             for i in range(num_attributes):
-                attributes += ""
+                attributes += " "
             print("made it")
             att_ind = 0
             for char in user_data:
