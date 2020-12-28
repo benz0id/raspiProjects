@@ -21,14 +21,13 @@ class UserLogManager:
     latest_user_id: int
 
     def __init__(self):
-        filepath = os.path.join("raspiProjects", "RFIDTesting", "Users")
+        filepath = os.path.join("Users")
         lst = os.listdir(filepath)
         self.latest_user_id = len(lst)
 
     def get_user_file(self, userid: int) -> BinaryIO:
         """Gets a read/write pickle file for a given user"""
-        filepath = os.path.join("raspiProjects", "RFIDTesting", "Users",
-                                str(userid) + ".pickle")
+        filepath = os.path.join("Users", str(userid) + ".pickle")
         return open(filepath, "wb+")
 
     def get_user(self, user_id: int) -> User:

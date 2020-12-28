@@ -6,6 +6,7 @@ from User import User
 reader = SimpleMFRC522()
 GPIO.setwarnings(False)
 
+
 class Reader:
     reader = SimpleMFRC522()
 
