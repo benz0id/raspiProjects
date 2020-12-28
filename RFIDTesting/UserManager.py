@@ -69,32 +69,32 @@ class UserManager:
         separated by '|' """
         num_attributes = 3
         attributes = []
-        print(user_data)
+        # print(user_data)
         try:
             for i in range(num_attributes):
                 attributes += " "
-            print("made it")
+            # print("made it")
             att_ind = 0
             for char in user_data:
-                print(char)
+                # print(char)
                 if char == "|":
                     att_ind += 1
                 else:
                     attributes[att_ind] += char
-            print(attributes)
+            # print(attributes)
 
             for i in range(num_attributes):
                 attributes[i] = attributes[i].strip()
 
-            print(attributes)
+            # print(attributes)
 
             # Checking that the received input is valid
             if num_attributes - 1 != att_ind:
-                print(num_attributes, att_ind)
+                # print(num_attributes, att_ind)
                 raise InvalidInput
 
             if not self.security_manager.validate_key(int(attributes[2])):
-                print("Invalid Key:", attributes[2])
+                # print("Invalid Key:", attributes[2])
                 raise InvalidUserCode
 
             return User(attributes[0], User.str_to_date(attributes[1]),
