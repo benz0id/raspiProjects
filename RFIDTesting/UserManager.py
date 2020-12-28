@@ -73,9 +73,10 @@ class UserManager:
         try:
             for i in range(num_attributes):
                 attributes += ""
-
+            print("made it")
             att_ind = 0
             for char in user_data:
+                print(char)
                 if char == "|":
                     att_ind += 1
                 else:
