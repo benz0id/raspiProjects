@@ -7,6 +7,7 @@ from SecurityManager import SecurityManager
 from UserManager import UserManager
 from User import User
 from UserManager import InvalidInput, InvalidUserCode
+from time import sleep
 
 # User String Format:
 # username:str | lastlogin
@@ -41,12 +42,13 @@ def handle_received_data(data: str):
         finally:
             GPIO.cleanup()
 
+user_manager.register_new_user()
 
 # Main loop
 while True:
     try:
         data = reader.get_tag_data()
         handle_received_data(data)
-
+        sleep(0.5)
     finally:
         GPIO.cleanup()
