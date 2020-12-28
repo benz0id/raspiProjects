@@ -2,6 +2,7 @@ import RPi.GPIO as GPIO
 from mfrc522 import SimpleMFRC522
 from datetime import datetime
 from User import User
+
 reader = SimpleMFRC522()
 
 
@@ -30,11 +31,12 @@ class Reader:
         """Writes new user info to an RFID tag. Waits for a tag to contact.
         Written info format:
         'entered_username|last_login_datetime('%Y-%m-%d %H:%M:%S')' """
-        attributes = []
         user_info = ""
-        attributes += user.get_username()
-        attributes += (datetime.now().strftime('%Y-%m-%d %H:%M:%S'))
-        attributes += user.get_key()
+        attributes = [
+            user.get_username(),
+            (datetime.now().strftime('%Y-%m-%d %H:%M:%S')),
+            user.get_key()
+        ]
 
         for attribute in attributes:
             user_info += attribute
