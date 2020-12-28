@@ -1,5 +1,4 @@
 import RPi.GPIO as GPIO
-from mfrc522 import SimpleMFRC522
 from User import User
 from typing import Tuple, List
 from Reader import Reader

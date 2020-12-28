@@ -75,7 +75,7 @@ class UserManager:
             if num_attributes - 1 != att_ind:
                 raise InvalidInput
 
-            if self.security_manager.validate_key(attributes[2]):
+            if self.security_manager.validate_key(int(attributes[2])):
                 raise InvalidUserCode
 
             for i in range(len(attributes)):
@@ -88,8 +88,7 @@ class UserManager:
         except IndexError:
             raise InvalidInput
         except ValueError:
-            self.presenter.print("Invalid previous login date received")
-            return User(attributes[0], datetime.now(), attributes[2])
+            raise InvalidInput
 
     def create_new_user(self, username: str) -> User:
         """Creates a new user with a valid passkey"""
