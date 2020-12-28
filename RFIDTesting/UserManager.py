@@ -23,7 +23,7 @@ class UserManager:
     security_manager: SecurityManager
 
     def __init__(self, presenter: Presenter, reader: Reader, security_manager:
-    SecurityManager):
+                 SecurityManager):
         self.presenter = presenter
         self.reader = reader
         self.security_manager = security_manager
@@ -82,9 +82,11 @@ class UserManager:
 
             # Checking that the received input is valid
             if num_attributes - 1 != att_ind:
+                print(num_attributes, att_ind)
                 raise InvalidInput
 
             if self.security_manager.validate_key(int(attributes[2])):
+                print("Invalid Key:", attributes[2])
                 raise InvalidUserCode
 
             for i in range(len(attributes)):
@@ -95,8 +97,10 @@ class UserManager:
             return User(attributes[0], User.str_to_date(attributes[1]),
                         attributes[2])
         except IndexError:
+            print("IndexErr")
             raise InvalidInput
         except ValueError:
+            print("ValueErr")
             raise InvalidInput
 
     def create_new_user(self, username: str) -> User:

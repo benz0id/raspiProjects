@@ -18,6 +18,7 @@ reader = Reader()
 presenter = SimplePresenter()
 user_manager = UserManager(presenter, reader, security_manager)
 
+
 def check_for_user(data: str) -> Tuple[bool, User]:
     """Checks if the data is a valid users' data. Shows corresponding error
     messages iff the user's data isn't formatted properly."""
@@ -42,7 +43,9 @@ def handle_received_data(data: str):
         finally:
             GPIO.cleanup()
 
+
 user_manager.register_new_user()
+GPIO.setwarnings(False)
 
 # Main loop
 while True:
