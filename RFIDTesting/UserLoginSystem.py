@@ -1,6 +1,5 @@
 from datetime import datetime
-import RPi.GPIO as GPIO
-from typing import Tuple, List
+from typing import Tuple
 from Reader import Reader
 from Presenter import SimplePresenter
 from SecurityManager import SecurityManager
@@ -38,14 +37,10 @@ def handle_received_data(data: str):
     valid_user, user = check_for_user(data)
     if valid_user:
         presenter.print(user.get_login_str())
-        try:
-            reader.write_user_to_tag(user)
-        finally:
-            GPIO.cleanup()
+        reader.write_user_to_tag(user)
 
 
 user_manager.register_new_user()
-GPIO.setwarnings(False)
 
 # Main loop
 while True:

@@ -4,7 +4,7 @@ from datetime import datetime
 from User import User
 
 reader = SimpleMFRC522()
-
+GPIO.setwarnings(False)
 
 class Reader:
     reader = SimpleMFRC522()
@@ -14,7 +14,7 @@ class Reader:
         try:
             reader.write(string)
         finally:
-            GPIO.cleanup
+            GPIO.cleanup()
 
     def get_tag_data(self) -> str:
         """Interprets and returns the data stored in the tag.
