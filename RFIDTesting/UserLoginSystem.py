@@ -6,38 +6,39 @@ from SecurityManager import SecurityManager
 from UserManager import UserManager
 from User import User
 from UserManager import InvalidInput, InvalidUserCode
+from UserLogManager import UserLogManager
 from time import sleep
 
 # User String Format:
-# username:str | lastlogin
+# "username | user_code | user"
 # Designed for use with rc522 module, wired as required by the mfrc522 module
 
 security_manager = SecurityManager()
 reader = Reader()
 presenter = SimplePresenter()
 user_manager = UserManager(presenter, reader, security_manager)
+user_log_manager = UserLogManager()
 
 
-def check_for_user(data: str) -> Tuple[bool, User]:
+def check_for_user(input_data: str) -> bool or User:
     """Checks if the data is a valid users' data. Shows corresponding error
     messages iff the user's data isn't formatted properly."""
     try:
-        user = user_manager.user_from_input(data)
-        return True, user
+        user = user_manager.user_from_input(input_data)
+        return user
     except InvalidInput:
-        presenter.print("Bad Read")
+        presenter.print("Bad Read or Invalid Key")
     except InvalidUserCode:
-        presenter.print("User is no longer cleared for access")
+        presenter.print("User code invalid")
+    return False
 
-    return False, User("", datetime.now(), 0)
 
-
-def handle_received_data(data: str):
+def handle_received_data(input_data: str):
     """Handles the process that occurs after user data is received."""
-    valid_user, user = check_for_user(data)
+    valid_user = check_for_user(input_data)
     if valid_user:
-        presenter.print(user.get_login_str())
-        reader.write_user_to_tag(user)
+        presenter.print(user_log_manager.get_login_str(valid_user))
+        user_log_manager.add_tap_log(valid_user)
 
 
 user_manager.register_new_user()

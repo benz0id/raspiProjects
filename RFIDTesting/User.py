@@ -1,42 +1,33 @@
 from datetime import datetime
+from typing import List
 
 
 class User:
     __username: str
-    __last_login: datetime
+    __user_id: int
     __key: int
+    __sign_ins: List[datetime]
+    __registration_date: datetime
 
-    def __init__(self, username: str, last_login: datetime, key: int):
-        self.__username = username
-        self.__last_login = last_login
-        self.__key = key
+    def __init__(self, attributes: List[str or int]):
+        self.__username = attributes[0]
+        self.__key = attributes[1]
+        self.__user_id = attributes[2]
+        self.__sign_ins = []
+        self.__registration_date = datetime.now()
 
-    def get_login_str(self) -> str:
-        """Generates the message that is displayed when the user is logged in"""
-        login_str = ""
+    def get_attributes(self) -> List[str or int]:
+        """Returns a user's attributes in a consistent order"""
+        return [self.__username, self.__key]
 
-        time_since_last_login = (datetime.now() - self.__last_login)
-
-        time_since_last_login_str = str(time_since_last_login.days) + \
-                                    " days and " + str(
-            round(time_since_last_login.seconds / 3600)) + \
-                                    " hours ago"
-
-        login_str += "Welcome back " + self.__username + "\n" + \
-                     "Your last login was at: " + \
-                     str(self.__last_login.strftime("%b %d %Y at %I:%M%p")) + \
-                     ", approximately " + time_since_last_login_str + "."
-
-        return login_str
+    def add_sign_in(self):
+        """Adds a date when this user signed in."""
+        self.__sign_ins.append(datetime.now())
 
     @staticmethod
-    def str_to_date(input_str: str) -> datetime:
-        date = datetime.strptime(input_str, '%Y-%m-%d %H:%M:%S')
-        return date
-
-    @staticmethod
-    def date_to_str(input_date: datetime) -> str:
-        return input_date.strftime('%Y-%m-%d %H:%M:%S')
+    def num_writable_attributes():
+        """The number of attributes contained in a user"""
+        return 3
 
     def get_username(self) -> str:
         """Returns this user's username"""
@@ -45,3 +36,11 @@ class User:
     def get_key(self):
         """Returns this user's key"""
         return self.__key
+
+    def get_id(self):
+        """Returns this users ID"""
+        return self.__user_id
+
+    def get_last_sign_in(self):
+        """"Returns this users last sign in date"""
+        return self.__sign_ins[-1]
