@@ -16,8 +16,8 @@ from time import sleep
 security_manager = SecurityManager()
 reader = Reader()
 presenter = SimplePresenter()
-user_manager = UserManager(presenter, reader, security_manager)
 user_log_manager = UserLogManager()
+user_manager = UserManager(presenter, reader, security_manager, user_log_manager)
 
 
 def check_for_user(input_data: str) -> bool or User:
