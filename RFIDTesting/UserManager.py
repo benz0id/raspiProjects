@@ -83,6 +83,9 @@ class UserManager:
                     attributes[att_ind] += char
             print(attributes)
 
+            for i in range(len(attributes)):
+                attributes[i] = attributes[i].strip()
+
             # Checking that the received input is valid
             if num_attributes - 1 != att_ind:
                 print(num_attributes, att_ind)
@@ -91,9 +94,6 @@ class UserManager:
             if self.security_manager.validate_key(int(attributes[2])):
                 print("Invalid Key:", attributes[2])
                 raise InvalidUserCode
-
-            for i in range(len(attributes)):
-                attributes[i] = attributes[i].strip()
 
             User.str_to_date(attributes[1])
 
