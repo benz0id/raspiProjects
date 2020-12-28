@@ -37,8 +37,14 @@ def handle_received_data(input_data: str):
     """Handles the process that occurs after user data is received."""
     valid_user = check_for_user(input_data)
     if valid_user:
-        presenter.print(user_log_manager.get_login_str(valid_user))
-        user_log_manager.add_tap_log(valid_user)
+        run_sign_in_process(valid_user)
+
+def run_sign_in_process(user: User):
+    """Runs the series of events that should occur when a user taps onto the
+    reader."""
+    presenter.print(user_log_manager.get_login_str(user))
+    user_log_manager.add_tap_log(user)
+
 
 
 user_manager.register_new_user()
