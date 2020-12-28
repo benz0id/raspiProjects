@@ -18,13 +18,12 @@ class InvalidUserCode(Exception):
 
 
 class UserManager:
-
     reader: Reader
     presenter: Presenter
     security_manager: SecurityManager
 
     def __init__(self, presenter: Presenter, reader: Reader, security_manager:
-                 SecurityManager):
+    SecurityManager):
         self.presenter = presenter
         self.reader = reader
         self.security_manager = security_manager
@@ -42,10 +41,11 @@ class UserManager:
         """Writes new user info to an RFID tag. Waits for a tag to contact.
         Written info format:
         'entered_username|last_login_datetime('%Y-%m-%d %H:%M:%S')' """
-        attributes = []
-        attributes += user.get_username()
-        attributes += (datetime.now().strftime('%Y-%m-%d %H:%M:%S'))
-        attributes += user.get_key()
+        attributes = [
+            user.get_username(),
+            (datetime.now().strftime('%Y-%m-%d %H:%M:%S')),
+            user.get_key(),
+        ]
         user_info = ""
 
         for attribute in attributes:
@@ -103,7 +103,3 @@ class UserManager:
         """Creates a new user with a valid passkey"""
         return User(username, datetime.now(),
                     self.security_manager.generate_key())
-
-
-
-
