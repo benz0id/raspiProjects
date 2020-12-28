@@ -49,9 +49,6 @@ GPIO.setwarnings(False)
 
 # Main loop
 while True:
-    try:
-        data = reader.get_tag_data()
-        handle_received_data(data)
-        sleep(0.5)
-    finally:
-        GPIO.cleanup()
+    data = reader.get_tag_data()
+    handle_received_data(data)
+    sleep(0.5)

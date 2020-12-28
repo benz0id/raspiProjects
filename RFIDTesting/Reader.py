@@ -11,7 +11,10 @@ class Reader:
 
     def write(self, string: str):
         """Writes a given string to the tag"""
-        reader.write(string)
+        try:
+            reader.write(string)
+        finally:
+            GPIO.cleanup
 
     def get_tag_data(self) -> str:
         """Interprets and returns the data stored in the tag.
