@@ -1,31 +1,11 @@
-import RPi.GPIO as GPIO
-from typing import Tuple, List
-from RFIDTesting.Reader import Reader
-from RFIDTesting.Presenter import SimplePresenter
-from RFIDTesting.SecurityManager import SecurityManager
-from RFIDTesting.UserManager import UserManager
-from RFIDTesting.User import User
-
-# User String Format:
-# username:str | lastlogin
-# Designed for use with rc522 module, wired as required by the mfrc522 module
-
-security_manager = SecurityManager()
-reader = Reader()
+from datetime import datetime
+from Presenter import SimplePresenter
+from UserManager import UserManager
+from SecurityManager import SecurityManager
 presenter = SimplePresenter()
+security_manager = SecurityManager()
+reader = 1
 user_manager = UserManager(presenter, reader, security_manager)
-
-
-class InvalidInput(Exception):
-    """Raised when input from the RFID tag does not match the expected
-    formatting."""
-    pass
-
-
-class InvalidUserCode(Exception):
-    """Raised when a user's code is invalid"""
-    pass
-
 
 def check_for_user(data: str) -> Tuple[bool, User]:
     """Checks if the data is a valid users' data. Shows corresponding error
@@ -38,7 +18,6 @@ def check_for_user(data: str) -> Tuple[bool, User]:
     except InvalidUserCode:
         presenter.print("User is no longer cleared for access")
 
-
 def handle_received_data(data: str):
     """Handles the process that occurs after user data is received."""
     valid_user, user = check_for_user(data)
@@ -49,12 +28,6 @@ def handle_received_data(data: str):
         finally:
             GPIO.cleanup()
 
-
-# Main loop
-while True:
-    try:
-        data = reader.get_tag_data()
-        handle_received_data(data)
-
-    finally:
-        GPIO.cleanup()
+handle_received_data("Kyle" + "|" +
+                     datetime.now().strftime('%Y-%m-%d %H:%M:%S') + "|" +
+                     str(119218851371))

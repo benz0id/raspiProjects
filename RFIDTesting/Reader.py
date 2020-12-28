@@ -1,13 +1,11 @@
 import RPi.GPIO as GPIO
 from mfrc522 import SimpleMFRC522
 from datetime import datetime
-from User import User
-from typing import Tuple, List
+from RFIDTesting.User import User
 reader = SimpleMFRC522()
 
 
 class Reader:
-
     reader = SimpleMFRC522()
 
     def write(self, string: str):
