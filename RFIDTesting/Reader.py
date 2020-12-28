@@ -1,7 +1,7 @@
 import RPi.GPIO as GPIO
 from mfrc522 import SimpleMFRC522
 from datetime import datetime
-from RFIDTesting.User import User
+from User import User
 reader = SimpleMFRC522()
 
 

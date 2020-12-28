@@ -2,9 +2,9 @@ from Presenter import Presenter
 from datetime import datetime
 import RPi.GPIO as GPIO
 from UserLoginSystem import InvalidInput, InvalidUserCode
-from RFIDTesting.Reader import Reader
-from RFIDTesting.SecurityManager import SecurityManager
-from RFIDTesting.User import User
+from Reader import Reader
+from SecurityManager import SecurityManager
+from User import User
 
 
 class UserManager:

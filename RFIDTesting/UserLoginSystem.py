@@ -1,10 +1,10 @@
 import RPi.GPIO as GPIO
 from typing import Tuple, List
-from RFIDTesting.Reader import Reader
-from RFIDTesting.Presenter import SimplePresenter
-from RFIDTesting.SecurityManager import SecurityManager
-from RFIDTesting.UserManager import UserManager
-from RFIDTesting.User import User
+from Reader import Reader
+from Presenter import SimplePresenter
+from SecurityManager import SecurityManager
+from UserManager import UserManager
+from User import User
 
 # User String Format:
 # username:str | lastlogin
