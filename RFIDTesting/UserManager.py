@@ -44,7 +44,7 @@ class UserManager:
         attributes = [
             user.get_username(),
             (datetime.now().strftime('%Y-%m-%d %H:%M:%S')),
-            user.get_key(),
+            str(user.get_key()),
         ]
         user_info = ""
 
