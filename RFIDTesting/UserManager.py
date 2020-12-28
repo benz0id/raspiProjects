@@ -1,10 +1,20 @@
 from Presenter import Presenter
 from datetime import datetime
 import RPi.GPIO as GPIO
-from UserLoginSystem import InvalidInput, InvalidUserCode
 from Reader import Reader
 from SecurityManager import SecurityManager
 from User import User
+
+
+class InvalidInput(Exception):
+    """Raised when input from the RFID tag does not match the expected
+    formatting."""
+    pass
+
+
+class InvalidUserCode(Exception):
+    """Raised when a user's code is invalid"""
+    pass
 
 
 class UserManager:

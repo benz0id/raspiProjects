@@ -5,6 +5,7 @@ from Presenter import SimplePresenter
 from SecurityManager import SecurityManager
 from UserManager import UserManager
 from User import User
+from UserManager import InvalidInput, InvalidUserCode
 
 # User String Format:
 # username:str | lastlogin
@@ -14,18 +15,6 @@ security_manager = SecurityManager()
 reader = Reader()
 presenter = SimplePresenter()
 user_manager = UserManager(presenter, reader, security_manager)
-
-
-class InvalidInput(Exception):
-    """Raised when input from the RFID tag does not match the expected
-    formatting."""
-    pass
-
-
-class InvalidUserCode(Exception):
-    """Raised when a user's code is invalid"""
-    pass
-
 
 def check_for_user(data: str) -> Tuple[bool, User]:
     """Checks if the data is a valid users' data. Shows corresponding error
