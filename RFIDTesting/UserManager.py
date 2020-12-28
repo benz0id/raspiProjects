@@ -69,6 +69,7 @@ class UserManager:
         separated by '|' """
         num_attributes = 3
         attributes = []
+        print(user_data)
         try:
             for i in range(num_attributes):
                 attributes += ""
@@ -79,6 +80,7 @@ class UserManager:
                     att_ind += 1
                 else:
                     attributes[att_ind] += char
+            print(attributes)
 
             # Checking that the received input is valid
             if num_attributes - 1 != att_ind:
