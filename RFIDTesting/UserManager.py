@@ -68,7 +68,7 @@ class UserManager:
         separated by '|' """
         num_attributes = User.num_writable_attributes()
         attributes = []
-        # print(user_data)
+        print(user_data)
         try:
             for i in range(num_attributes):
                 attributes += " "
@@ -80,20 +80,20 @@ class UserManager:
                     att_ind += 1
                 else:
                     attributes[att_ind] += char
-            # print(attributes)
+            print(attributes)
 
             for i in range(num_attributes):
                 attributes[i] = attributes[i].strip()
 
-            # print(attributes)
+            print(attributes)
 
             # Checking that the received input is valid
             if num_attributes - 1 != att_ind:
-                # print(num_attributes, att_ind)
+                print(num_attributes, att_ind)
                 raise InvalidInput
 
             if not self.security_manager.validate_key(int(attributes[1])):
-                # print("Invalid Key:", attributes[1])
+                print("Invalid Key:", attributes[1])
                 raise InvalidUserCode
 
             return self.user_log_manager.get_user(attributes[2])
