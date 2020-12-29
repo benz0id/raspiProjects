@@ -96,7 +96,7 @@ class UserManager:
                 print("Invalid Key:", attributes[1])
                 raise InvalidUserCode
 
-            return self.user_log_manager.get_user(attributes[2])
+            return self.user_log_manager.get_user(int(attributes[2]))
         except IndexError:
             print("IndexErr")
             raise InvalidInput
