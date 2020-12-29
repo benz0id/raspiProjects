@@ -4,7 +4,7 @@ from typing import List
 
 class User:
     __username: str
-    __user_id: int
+    __id: int
     __key: int
     __sign_ins: List[datetime]
     __registration_date: datetime
@@ -12,13 +12,13 @@ class User:
     def __init__(self, attributes: List[str or int]):
         self.__username = attributes[0]
         self.__key = attributes[1]
-        self.__user_id = attributes[2]
+        self.__id = attributes[2]
         self.__sign_ins = []
         self.__registration_date = datetime.now()
 
     def get_attributes(self) -> List[str or int]:
         """Returns a user's attributes in a consistent order"""
-        return [self.__username, self.__key]
+        return [self.__username, self.__key, self.__id]
 
     def add_sign_in(self):
         """Adds a date when this user signed in."""
