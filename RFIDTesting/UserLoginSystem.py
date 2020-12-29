@@ -39,6 +39,7 @@ def handle_received_data(input_data: str):
     if valid_user:
         run_sign_in_process(valid_user)
 
+
 def run_sign_in_process(user: User):
     """Runs the series of events that should occur when a user taps onto the
     reader."""
