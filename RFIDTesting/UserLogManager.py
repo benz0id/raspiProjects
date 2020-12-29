@@ -28,7 +28,7 @@ class UserLogManager:
     def get_user_file(self, userid: int) -> BinaryIO:
         """Gets a read/write pickle file for a given user"""
         filepath = os.path.join("Users", str(userid) + ".pickle")
-        return open(filepath, "wb+")
+        return open(filepath, "wb")
 
     def get_user(self, user_id: int) -> User:
         """Retrieves a user from the archives given their ID"""
@@ -41,7 +41,7 @@ class UserLogManager:
         """Creates a new pickle for a given user"""
         new_user_file = self.get_user_file(user.get_id())
         pickle.dump(user, new_user_file)
-        new_user_file.close()
+        new_user_file.()
 
     def get_new_user_id(self) -> int:
         """Creates a new and unique user id"""
