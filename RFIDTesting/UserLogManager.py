@@ -41,7 +41,7 @@ class UserLogManager:
         """Creates a new pickle for a given user"""
         new_user_file = self.get_user_file(user.get_id())
         pickle.dump(user, new_user_file)
-        new_user_file.()
+        new_user_file.close()
 
     def get_new_user_id(self) -> int:
         """Creates a new and unique user id"""
