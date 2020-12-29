@@ -92,9 +92,13 @@ class UserManager:
                 print(num_attributes, att_ind)
                 raise InvalidInput
 
+            print("Valid input format")
+
             if not self.security_manager.validate_key(int(attributes[1])):
                 print("Invalid Key:", attributes[1])
                 raise InvalidUserCode
+
+            print("Valid Key")
 
             return self.user_log_manager.get_user(int(attributes[2]))
         except IndexError:

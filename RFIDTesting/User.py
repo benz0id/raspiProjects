@@ -39,7 +39,7 @@ class User:
 
     def get_id(self):
         """Returns this users ID"""
-        return self.__user_id
+        return self.__id
 
     def get_last_sign_in(self):
         """"Returns this users last sign in date"""
