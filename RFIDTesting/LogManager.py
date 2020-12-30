@@ -19,15 +19,16 @@ def date_to_str(input_date: datetime) -> str:
 class LogManager:
 
     latest_user_id: int
+    base_path = os.path.join("Users")
 
     def __init__(self):
-        filepath = os.path.join("RFIDTesting", "Users")
+        filepath = os.path.join(self.base_path)
         lst = os.listdir(filepath)
         self.latest_user_id = len(lst)
 
     def get_user_file(self, userid: int) -> BinaryIO:
         """Gets a read/write pickle file for a given user"""
-        filepath = os.path.join("RFIDTesting", "Users", str(userid) + ".pickle")
+        filepath = os.path.join(self.base_path, str(userid) + ".pickle")
         return open(filepath, "wb")
 
     def get_user(self, user_id: int) -> User:
