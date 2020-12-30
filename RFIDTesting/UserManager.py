@@ -4,7 +4,7 @@ import RPi.GPIO as GPIO
 from Reader import Reader
 from SecurityManager import SecurityManager
 from User import User
-from UserLogManager import UserLogManager
+from LogManager import LogManager
 
 
 class InvalidInput(Exception):
@@ -22,10 +22,10 @@ class UserManager:
     reader: Reader
     presenter: Presenter
     security_manager: SecurityManager
-    user_log_manager: UserLogManager
+    user_log_manager: LogManager
 
     def __init__(self, presenter: Presenter, reader: Reader, security_manager:
-                 SecurityManager, user_log_manager: UserLogManager):
+                 SecurityManager, user_log_manager: LogManager):
         self.presenter = presenter
         self.reader = reader
         self.security_manager = security_manager

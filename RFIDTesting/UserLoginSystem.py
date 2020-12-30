@@ -6,7 +6,7 @@ from SecurityManager import SecurityManager
 from UserManager import UserManager
 from User import User
 from UserManager import InvalidInput, InvalidUserCode
-from UserLogManager import UserLogManager
+from LogManager import LogManager
 from time import sleep
 
 # User String Format:
@@ -16,7 +16,7 @@ from time import sleep
 security_manager = SecurityManager()
 reader = Reader()
 presenter = SimplePresenter()
-user_log_manager = UserLogManager()
+user_log_manager = LogManager()
 user_manager = UserManager(presenter, reader, security_manager, user_log_manager)
 
 

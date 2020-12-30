@@ -16,7 +16,7 @@ def date_to_str(input_date: datetime) -> str:
     return input_date.strftime('%Y-%m-%d %H:%M:%S')
 
 
-class UserLogManager:
+class LogManager:
 
     latest_user_id: int
 
@@ -32,8 +32,11 @@ class UserLogManager:
 
     def get_user(self, user_id: int) -> User:
         """Retrieves a user from the archives given their ID"""
+        print("Retrieving user")
         uf = self.get_user_file(user_id)
+        print("User file received")
         user = pickle.load(uf)
+        print("User loaded")
         uf.close()
         return user
 

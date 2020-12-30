@@ -10,6 +10,10 @@ class User:
     __registration_date: datetime
 
     def __init__(self, attributes: List[str or int]):
+        """ Attributes
+        [0] username : str
+        [1] key : int
+        [2] id : int"""
         self.__username = attributes[0]
         self.__key = attributes[1]
         self.__id = attributes[2]
