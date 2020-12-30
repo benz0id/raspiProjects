@@ -59,15 +59,16 @@ class LogManager:
 
     def add_tap_log(self, user: User):
         """Adds a log to the users tap record."""
-        uf = self.get_user_file(user.get_id())
+        uf = self.get_user_file_read(user.get_id())
         user = pickle.load(uf)
         user.add_sign_in()
+        uf = self.get_user_file_write(user.get_id())
         pickle.dump(user, uf)
         uf.close()
 
     def get_last_use(self, user_id: int) -> datetime:
         """Gets the last time a given user used this scanner."""
-        uf = self.get_user_file(user_id)
+        uf = self.get_user_file_read(user_id)
         user = pickle.load(uf)
         date = user.get_last_sign_in()
         uf.close()
