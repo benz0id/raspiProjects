@@ -26,15 +26,20 @@ class LogManager:
         lst = os.listdir(filepath)
         self.latest_user_id = len(lst)
 
-    def get_user_file(self, userid: int) -> BinaryIO:
+    def get_user_file_write(self, userid: int) -> BinaryIO:
         """Gets a read/write pickle file for a given user"""
         filepath = os.path.join(self.base_path, str(userid) + ".pickle")
         return open(filepath, "wb")
 
+    def get_user_file_read(self, userid: int) -> BinaryIO:
+        """Gets a read/write pickle file for a given user"""
+        filepath = os.path.join(self.base_path, str(userid) + ".pickle")
+        return open(filepath, "rb")
+
     def get_user(self, user_id: int) -> User:
         """Retrieves a user from the archives given their ID"""
         print("Retrieving user")
-        uf = self.get_user_file(user_id)
+        uf = self.get_user_file_read(user_id)
         print("User file received")
         user = pickle.load(uf)
         print("User loaded")
@@ -43,7 +48,7 @@ class LogManager:
 
     def register_new_user(self, user: User):
         """Creates a new pickle for a given user"""
-        new_user_file = self.get_user_file(user.get_id())
+        new_user_file = self.get_user_file_write(user.get_id())
         pickle.dump(user, new_user_file)
         new_user_file.close()
 
