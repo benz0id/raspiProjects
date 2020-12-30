@@ -24,7 +24,7 @@ class LogManager:
     def __init__(self):
         filepath = os.path.join(self.base_path)
         lst = os.listdir(filepath)
-        self.latest_user_id = len(lst)
+        self.latest_user_id = len(lst) - 1
 
     def get_user_file_write(self, userid: int) -> BinaryIO:
         """Gets a read/write pickle file for a given user"""
