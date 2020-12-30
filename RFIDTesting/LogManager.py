@@ -54,7 +54,7 @@ class LogManager:
 
     def get_new_user_id(self) -> int:
         """Creates a new and unique user id"""
-        self.latest_user_id += 1
+        self.latest_user_id -= 1
         return self.latest_user_id
 
     def add_tap_log(self, user: User):
