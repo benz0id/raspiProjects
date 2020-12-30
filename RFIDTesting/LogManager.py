@@ -38,11 +38,13 @@ class LogManager:
 
     def get_user(self, user_id: int) -> User:
         """Retrieves a user from the archives given their ID"""
-        print("Retrieving user")
+        print("Retrieving user" + str(user_id))
         uf = self.get_user_file_read(user_id)
         print("User file received")
         user = pickle.load(uf)
         print("User loaded")
+        print(user.get_attributes())
+        print(user.get_last_sign_in())
         uf.close()
         return user
 
