@@ -1,4 +1,4 @@
-from Presenter import Presenter
+from Presenters import Presenter
 from datetime import datetime
 import RPi.GPIO as GPIO
 from Reader import Reader

@@ -1,7 +1,7 @@
 from datetime import datetime
 from typing import Tuple
 from Reader import Reader
-from Presenter import SimplePresenter
+from Presenters import SimplePresenter
 from SecurityManager import SecurityManager
 from UserManager import UserManager
 from User import User
@@ -46,9 +46,6 @@ def run_sign_in_process(user: User):
     presenter.print(user_log_manager.get_login_str(user))
     user_log_manager.add_tap_log(user)
 
-
-
-user_manager.register_new_user()
 
 # Main loop
 while True:
