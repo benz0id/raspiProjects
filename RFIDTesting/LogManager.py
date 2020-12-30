@@ -44,7 +44,7 @@ class LogManager:
         user = pickle.load(uf)
         print("User loaded")
         print(user.get_attributes())
-        print(user.__sign_ins)
+        print(user.get_sign_ins())
         uf.close()
         return user
 

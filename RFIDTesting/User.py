@@ -49,3 +49,7 @@ class User:
         """"Returns this users last sign in date"""
         print(self.__sign_ins)
         return self.__sign_ins[-1]
+
+    def get_sign_ins(self):
+        """Gets the list of times this user has signed in"""
+        return self.__sign_ins
