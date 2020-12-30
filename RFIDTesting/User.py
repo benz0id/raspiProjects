@@ -17,7 +17,7 @@ class User:
         self.__username = attributes[0]
         self.__key = attributes[1]
         self.__id = attributes[2]
-        self.__sign_ins = []
+        self.__sign_ins = [datetime.now()]
         self.__registration_date = datetime.now()
 
     def get_attributes(self) -> List[str or int]:
