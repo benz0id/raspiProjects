@@ -50,8 +50,10 @@ class LogManager:
 
     def register_new_user(self, user: User):
         """Creates a new pickle for a given user"""
+        print("Registering new user")
         new_user_file = self.get_user_file_write(user.get_id())
         pickle.dump(user, new_user_file)
+        print("User stored")
         new_user_file.close()
 
     def get_new_user_id(self) -> int:
