@@ -37,6 +37,7 @@ class UserManager:
         user_txt = self.presenter.input("Enter a username for the new user.")
         self.presenter.print("Now place your tag to write")
         new_user = self.create_new_user(user_txt)
+        self.user_log_manager.register_new_user(new_user)
         self.write_user_to_tag(new_user)
         self.presenter.print("Welcome, " + user_txt)
 
