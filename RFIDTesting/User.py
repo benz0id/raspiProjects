@@ -26,6 +26,7 @@ class User:
 
     def add_sign_in(self):
         """Adds a date when this user signed in."""
+        print(self.__sign_ins)
         self.__sign_ins.append(datetime.now())
 
     @staticmethod
