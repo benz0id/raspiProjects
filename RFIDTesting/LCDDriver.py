@@ -105,6 +105,8 @@ Rw = 0b00000010 # Read/Write bit
 Rs = 0b00000001 # Register select bit
 
 class lcd:
+
+    is_on: bool
     #initializes objects and lcd
     def __init__(self):
         self.lcd_device = i2c_device(ADDRESS)
@@ -119,6 +121,9 @@ class lcd:
         self.lcd_write(LCD_CLEARDISPLAY)
         self.lcd_write(LCD_ENTRYMODESET | LCD_ENTRYLEFT)
         sleep(0.2)
+        self.lcd_clear()
+        self.backlight(0)
+        self.is_on = False
 
 
     # clocks EN to latch command
@@ -170,8 +175,13 @@ class lcd:
     def backlight(self, state): # for state, 1 = on, 0 = off
         if state == 1:
             self.lcd_device.write_cmd(LCD_BACKLIGHT)
+            self.is_on = True
         elif state == 0:
             self.lcd_device.write_cmd(LCD_NOBACKLIGHT)
+            self.is_on = False
+
+    def is_on(self):
+        return self.is_on
 
     # add custom characters (0 - 7)
     def lcd_load_custom_chars(self, fontdata):

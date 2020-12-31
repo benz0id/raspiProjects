@@ -1,3 +1,5 @@
+import logging
+
 from Presenters import Presenter
 from datetime import datetime
 import RPi.GPIO as GPIO
@@ -69,7 +71,7 @@ class UserManager:
         separated by '|' """
         num_attributes = User.num_writable_attributes()
         attributes = []
-        print(user_data)
+        logging.info(user_data)
         try:
             for i in range(num_attributes):
                 attributes += " "
@@ -81,32 +83,32 @@ class UserManager:
                     att_ind += 1
                 else:
                     attributes[att_ind] += char
-            print(attributes)
+            logging.info(attributes)
 
             for i in range(num_attributes):
                 attributes[i] = attributes[i].strip()
 
-            print(attributes)
+            logging.info(attributes)
 
             # Checking that the received input is valid
             if num_attributes - 1 != att_ind:
-                print(num_attributes, att_ind)
+                logging.info(num_attributes, att_ind)
                 raise InvalidInput
 
-            print("Valid input format")
+            logging.info("Valid input format")
 
             if not self.security_manager.validate_key(int(attributes[1])):
-                print("Invalid Key:", attributes[1])
+                logging.exception("Invalid Key:", attributes[1])
                 raise InvalidUserCode
 
-            print("Valid Key")
+            logging.info("Valid Key")
 
             return self.user_log_manager.get_user(int(attributes[2]))
         except IndexError:
-            print("IndexErr")
+            logging.exception("IndexErr")
             raise InvalidInput
         except ValueError:
-            print("ValueErr")
+            logging.exception("ValueErr")
             raise InvalidInput
         # TODO add more specific error messages
 

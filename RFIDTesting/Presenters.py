@@ -1,10 +1,14 @@
-
 # TODO add functionality for a display
+import logging
 from abc import abstractmethod
 from logging import warning
-
+from threading import Thread, Lock
+from datetime import datetime, timedelta
+from time import sleep
 import LCDDriver
 from typing import List
+
+mutex = Lock()
 
 
 class Presenter:
@@ -34,13 +38,59 @@ class SimplePresenter(Presenter):
 
 class LCD(Presenter):
 
+    lcd_regulator: Thread
+    LCD_ON_TIME = 180
+    last_turned_on: datetime
     lcd: LCDDriver.lcd
     LINE_LENGTH = 20
     NUM_LINES = 4
 
     def __init__(self):
-        """Creates a new LCD driver"""
         self.lcd = LCDDriver.lcd()
+        self.lcd_regulator = Thread(target=self.check_lcd)
+        self.last_turned_on = datetime.now()
+
+    def check_lcd(self):
+        """Check if the LCD is currently being used, if the lcd hasn't been used
+        in LCD_ON_TIME seconds, then it is turned off. Checks every 30 seconds.
+        """
+        while self.lcd.is_on:
+            mutex.acquire()
+            if datetime.now() - self.last_turned_on > \
+                    timedelta(0, self.LCD_ON_TIME):
+                self.lcd.backlight(0)
+                self.lcd.lcd_clear()
+            mutex.release()
+            sleep(30)
+
+    def begin_off_timer(self):
+        """If it is not already running begins the thread that regulates the
+        LCD"""
+        mutex.acquire()
+        self.lcd.lcd_clear()
+        self.lcd.backlight(1)
+        self.last_turned_on = datetime.now()
+        mutex.release()
+        if not self.lcd_regulator.is_alive():
+            self.lcd_regulator.start()
+
+    def print(self, to_show: str):
+        """Shows the given string on the the LCD"""
+        str_list = self.to_lines_list(to_show)
+        self.begin_off_timer()
+        logging.info("Printing to LCD")
+        try:
+            for i in range(len(str_list)):
+                logging.info("Printing:" + str_list[i] + " at index " + str(i))
+                self.lcd.lcd_display_string(str_list[i], i)
+        except IOError:
+            logging.error("Failed to print to LCD")
+
+    def input(self, to_show: str) -> str:
+        """Shows the text to the user and fetches their input."""
+        self.print(to_show)
+        # TODO this should be fixed using a keyboard input source
+        return input()
 
     def to_lines_list(self, to_break: str) -> List[str]:
         """Breaks a <to_break> into multiple strings based upon the placement of
@@ -52,7 +102,7 @@ class LCD(Presenter):
         while j < len(to_break):
             if to_break[j] == "\n":
                 i += 1
-                print("adding a new index" + str(i))
+                logging.info("adding a new index" + str(i))
                 broken_strs.append("")
             else:
                 broken_strs[i] += to_break[j]
@@ -65,25 +115,8 @@ class LCD(Presenter):
                         "\nOffending line \"" + s + "\"")
         if len(broken_strs) > self.NUM_LINES:
             warning("Number of LCD lines exceeded.\n Max: " +
-                    str(self.NUM_LINES) + "\nReached: " + str(len(broken_strs)) +
+                    str(self.NUM_LINES) + "\nReached: " + str(
+                len(broken_strs)) +
                     "\nOffending message: \"" + to_break + "\"")
 
         return broken_strs
-
-    def print(self, to_show: str):
-        """Shows the given string on the the LCD"""
-        str_list = self.to_lines_list(to_show)
-        print("Printing to LCD")
-        for i in range(len(str_list)):
-            print("Printing:" + str_list[i] + "at index " + str(i))
-            self.lcd.lcd_display_string(str_list[i], i)
-
-    def input(self, to_show: str) -> str:
-        """Shows the text to the user and fetches their input."""
-        self.print(to_show)
-        # TODO this should be fixed using a keyboard input source
-        return input()
-
-
-
-

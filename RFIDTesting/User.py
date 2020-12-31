@@ -47,7 +47,7 @@ class User:
 
     def get_last_sign_in(self):
         """"Returns this users last sign in date"""
-        print(self.__sign_ins)
+        logging.info(self.__sign_ins)
         return self.__sign_ins[-1]
 
     def get_sign_ins(self):

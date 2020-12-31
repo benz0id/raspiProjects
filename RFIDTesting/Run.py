@@ -1,21 +1,14 @@
 from Presenters import LCD
 from Reader import Reader
-from UserLoginManager import LoginManager
+from LoginManager import LoginManager
 from time import sleep
+import threading
 
 
 reader = Reader()
 lcd = LCD()
 login_manager = LoginManager(reader, lcd)
 
+rfid_login = threading.Thread(target=login_manager.run_login_system())
 
-# Main loop
-while True:
-    # Fetch any data available from the RFID reader
-    data = reader.get_tag_data()
-
-    # Handle the data received
-    login_manager.handle_received_data(data)
-
-    # Wait two seconds
-    sleep(2)
+rfid_login.start()

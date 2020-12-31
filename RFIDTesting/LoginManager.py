@@ -18,7 +18,7 @@ class LoginManager:
 
     security_manager: SecurityManager
     reader: Reader
-    presenter: SimplePresenter
+    presenter: Presenter
     user_log_manager: LogManager
     user_manager: UserManager
 
@@ -32,6 +32,19 @@ class LoginManager:
         self.user_manager = UserManager(presenter, self.reader,
                                         self.security_manager,
                                         self.user_log_manager)
+
+    def run_login_system(self):
+        """Runs the login system continually"""
+        # Main loop
+        while True:
+            # Fetch any data available from the RFID reader
+            data = self.reader.get_tag_data()
+
+            # Handle the data received
+            self.handle_received_data(data)
+
+            # Wait two seconds
+            sleep(2)
 
     def check_for_user(self, input_data: str) -> bool or User:
         """Checks if the data is a valid users' data. Shows corresponding error

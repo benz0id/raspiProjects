@@ -38,22 +38,22 @@ class LogManager:
 
     def get_user(self, user_id: int) -> User:
         """Retrieves a user from the archives given their ID"""
-        print("Retrieving user" + str(user_id))
+        logging.info("Retrieving user" + str(user_id))
         uf = self.get_user_file_read(user_id)
-        print("User file received")
+        logging.info("User file received")
         user = pickle.load(uf)
-        print("User loaded")
-        print(user.get_attributes())
-        print(user.get_sign_ins())
+        logging.info("User loaded")
+        logging.info(user.get_attributes())
+        logging.info(user.get_sign_ins())
         uf.close()
         return user
 
     def register_new_user(self, user: User):
         """Creates a new pickle for a given user"""
-        print("Registering new user")
+        logging.info("Registering new user")
         new_user_file = self.get_user_file_write(user.get_id())
         pickle.dump(user, new_user_file)
-        print("User stored")
+        logging.info("User stored")
         new_user_file.close()
 
     def get_new_user_id(self) -> int:
