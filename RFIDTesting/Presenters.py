@@ -61,7 +61,7 @@ class LCD(Presenter):
                 self.lcd.backlight(0)
                 self.lcd.lcd_clear()
             mutex.release()
-            sleep(30)
+            sleep(10)
 
     def begin_off_timer(self):
         """If it is not already running begins the thread that regulates the
