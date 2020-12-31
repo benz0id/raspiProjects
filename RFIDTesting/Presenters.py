@@ -54,7 +54,6 @@ class LCD(Presenter):
                 i += 1
                 print("adding a new index" + str(i))
                 broken_strs.append("")
-                j += 1
             else:
                 broken_strs[i] += to_break[j]
             j += 1
