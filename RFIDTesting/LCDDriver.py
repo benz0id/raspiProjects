@@ -145,13 +145,13 @@ class lcd:
 
     # put string function with optional char positioning
     def lcd_display_string(self, string, line=1, pos=0):
-        if line == 1:
+        if line == 0:
             pos_new = pos
-        elif line == 2:
+        elif line == 1:
             pos_new = 0x40 + pos
-        elif line == 3:
+        elif line == 2:
             pos_new = 0x14 + pos
-        elif line == 4:
+        elif line == 3:
             pos_new = 0x54 + pos
         else:
             return None
