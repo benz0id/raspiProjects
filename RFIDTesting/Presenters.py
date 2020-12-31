@@ -59,8 +59,8 @@ class LCD(Presenter):
             mutex.acquire()
             if datetime.now() - self.last_turned_on > \
                     timedelta(0, self.LCD_ON_TIME):
-                self.lcd.backlight(0)
                 self.lcd.lcd_clear()
+                self.lcd.backlight(0)
             mutex.release()
 
     def begin_off_timer(self):
@@ -71,6 +71,7 @@ class LCD(Presenter):
         self.lcd.backlight(1)
         self.last_turned_on = datetime.now()
         if not self.lcd_regulator.is_alive():
+            self.lcd_regulator = Thread(target=self.check_lcd)
             self.lcd_regulator.start()
         mutex.release()
 
