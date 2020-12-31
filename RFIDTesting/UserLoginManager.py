@@ -27,7 +27,7 @@ class LoginManager:
         """Creates a new LoginManager with a certain presenter strategy"""
         self.security_manager = SecurityManager()
         self.reader = reader
-        self.presenter = SimplePresenter()
+        self.presenter = presenter
         self.user_log_manager = LogManager()
         self.user_manager = UserManager(presenter, self.reader,
                                         self.security_manager,
