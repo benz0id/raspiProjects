@@ -6,6 +6,7 @@ from logging import warning
 import LCDDriver
 from typing import List
 
+
 class Presenter:
 
     @abstractmethod
