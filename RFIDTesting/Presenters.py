@@ -45,16 +45,18 @@ class LCD(Presenter):
     def to_lines_list(self, to_break: str) -> List[str]:
         """Breaks a <to_break> into multiple strings based upon the placement of
         newline characters"""
-        broken_strs = []
+        broken_strs = [""]
         i = 0
         j = 0
+
         while j < len(to_break):
             if to_break[j] == "\\" and to_break[j + 1]:
                 i += 1
+                broken_strs[i] = ""
                 j += 1
             else:
                 broken_strs[i] += to_break[j]
-                j += 1
+            j += 1
 
         for s in to_break:
             if len(s) > self.LINE_LENGTH:
