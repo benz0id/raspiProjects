@@ -50,7 +50,7 @@ class LCD(Presenter):
         j = 0
 
         while j < len(to_break):
-            if to_break[j] == "\\" and to_break[j + 1] == "n":
+            if to_break[j] == "\n":
                 i += 1
                 print("adding a new index" + str(i))
                 broken_strs[i] = ""
