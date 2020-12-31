@@ -55,13 +55,13 @@ class LCD(Presenter):
         in LCD_ON_TIME seconds, then it is turned off. Checks every 30 seconds.
         """
         while self.lcd.is_on:
+            sleep(10)
             mutex.acquire()
             if datetime.now() - self.last_turned_on > \
                     timedelta(0, self.LCD_ON_TIME):
                 self.lcd.backlight(0)
                 self.lcd.lcd_clear()
             mutex.release()
-            sleep(10)
 
     def begin_off_timer(self):
         """If it is not already running begins the thread that regulates the
@@ -70,9 +70,9 @@ class LCD(Presenter):
         self.lcd.lcd_clear()
         self.lcd.backlight(1)
         self.last_turned_on = datetime.now()
-        mutex.release()
         if not self.lcd_regulator.is_alive():
             self.lcd_regulator.start()
+        mutex.release()
 
     def print(self, to_show: str):
         """Shows the given string on the the LCD"""
