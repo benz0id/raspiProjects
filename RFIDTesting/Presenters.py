@@ -39,7 +39,7 @@ class SimplePresenter(Presenter):
 class LCD(Presenter):
 
     lcd_regulator: Thread
-    LCD_ON_TIME = 180
+    LCD_ON_TIME = 30
     last_turned_on: datetime
     lcd: LCDDriver.lcd
     LINE_LENGTH = 20
