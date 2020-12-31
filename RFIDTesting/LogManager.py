@@ -87,13 +87,13 @@ class LogManager:
         time_since_last_login = (datetime.now() - last_login)
 
         time_since_last_login_str = str(time_since_last_login.days) + \
-                                    " days and " + str(
+                                    " days & " + str(
             round(time_since_last_login.seconds / 3600)) + \
-                                    " hours ago"
+                                    " hrs ago"
 
         login_str += "Welcome back " + user.get_username() + "\n" + \
                      "Your last login was at:\n" + \
-                     str(last_login.strftime("%b %d %Y at %I:%M%p")) + "\n" + \
+                     str(last_login.strftime("%b %d %Y %I:%M%p")) + "\n" + \
                      time_since_last_login_str
 
         return login_str
