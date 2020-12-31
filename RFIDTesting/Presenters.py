@@ -53,7 +53,7 @@ class LCD(Presenter):
             if to_break[j] == "\n":
                 i += 1
                 print("adding a new index" + str(i))
-                broken_strs[i] = ""
+                broken_strs.append("")
                 j += 1
             else:
                 broken_strs[i] += to_break[j]
