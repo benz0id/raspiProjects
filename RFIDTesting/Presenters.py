@@ -50,8 +50,9 @@ class LCD(Presenter):
         j = 0
 
         while j < len(to_break):
-            if to_break[j] == "\\" and to_break[j + 1]:
+            if to_break[j] == "\\" and to_break[j + 1] == "n":
                 i += 1
+                print("adding a new index" + str(i))
                 broken_strs[i] = ""
                 j += 1
             else:
@@ -75,7 +76,7 @@ class LCD(Presenter):
         str_list = self.to_lines_list(to_show)
         print("Printing to LCD")
         for i in range(len(str_list)):
-            print("Printing:" + str_list[i] + "at index" + str(i))
+            print("Printing:" + str_list[i] + "at index " + str(i))
             self.lcd.lcd_display_string(str_list[i], i)
 
     def input(self, to_show: str) -> str:
