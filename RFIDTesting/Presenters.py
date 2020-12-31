@@ -70,14 +70,14 @@ class LCD(Presenter):
     def print(self, to_show: str):
         """Shows the given string on the the LCD"""
         str_list = self.to_lines_list(to_show)
-
+        print("Printing to LCD")
         for i in range(len(str_list)):
             self.lcd.lcd_display_string(str_list[i], i)
 
     def input(self, to_show: str) -> str:
         """Shows the text to the user and fetches their input."""
         self.print(to_show)
-        # This should be fixed somehow, or not tbh
+        # TODO this should be fixed using a keyboard input source
         return input()
 
 
