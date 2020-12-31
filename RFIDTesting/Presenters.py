@@ -75,6 +75,7 @@ class LCD(Presenter):
         str_list = self.to_lines_list(to_show)
         print("Printing to LCD")
         for i in range(len(str_list)):
+            print("Printing:" + str_list[i] + "at index" + str(i))
             self.lcd.lcd_display_string(str_list[i], i)
 
     def input(self, to_show: str) -> str:
