@@ -64,7 +64,7 @@ class Reader:
         user_info = self.encrypt_user_data(user)
 
         try:
-            reader.write(user_info)
+            reader.write(str(user_info))
         finally:
             GPIO.cleanup()
 
