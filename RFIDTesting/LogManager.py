@@ -5,6 +5,7 @@ from datetime import datetime
 import Users
 import pickle
 import os.path
+from UserManager import InvalidInput
 
 
 def str_to_date(input_str: str) -> datetime:
@@ -36,16 +37,22 @@ class LogManager:
         filepath = os.path.join(self.base_path, str(userid) + ".pickle")
         return open(filepath, "rb")
 
-    def get_user(self, user_id: int) -> User:
+    def get_user(self, user_id: int, username: str) -> User:
         """Retrieves a user from the archives given their ID"""
-        logging.info("Retrieving user" + str(user_id))
-        uf = self.get_user_file_read(user_id)
-        logging.info("User file received")
-        user = pickle.load(uf)
-        logging.info("User loaded")
-        logging.info(user.get_attributes())
-        logging.info(user.get_sign_ins())
-        uf.close()
+        try:
+            logging.info("Retrieving user" + str(user_id))
+            uf = self.get_user_file_read(user_id)
+            logging.info("User file received")
+            user = pickle.load(uf)
+            logging.info("User loaded")
+            logging.info(user.get_attributes())
+            logging.info(user.get_sign_ins())
+            uf.close()
+        except FileNotFoundError:
+            raise InvalidInput("User specified does not exist")
+
+        if user.get_username() != username:
+            raise InvalidInput("Username does not match username on record")
         return user
 
     def register_new_user(self, user: User):

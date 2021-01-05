@@ -2,9 +2,27 @@ import RPi.GPIO as GPIO
 from mfrc522 import SimpleMFRC522
 from datetime import datetime
 from User import User
+from cryptography.fernet import Fernet, InvalidToken
+import os.path
+import logging
 
 reader = SimpleMFRC522()
 GPIO.setwarnings(False)
+
+# Load key from file if it already exists, otherwise create a file and key
+key_file_path = os.path.join("Users", "Key.txt")
+
+try:
+    key_file = open(key_file_path, "rb")
+    key = bytes(key_file.readlines()[0])
+    key_file.close()
+except FileNotFoundError:
+    key_file = open(key_file_path, "wb")
+    key = Fernet.generate_key()
+    key_file.write(key)
+    key_file.close()
+
+f = Fernet(key)
 
 
 class Reader:
@@ -20,7 +38,12 @@ class Reader:
     def get_tag_data(self) -> str:
         """Interprets and returns the data stored in the tag.
         #TODO add encryption to this function"""
-        return self.read_data()
+        try:
+            decr_data = f.decrypt(self.read_data().encode())
+            return decr_data.decode()
+        except InvalidToken:
+            logging.info("Improperly decrypted data received")
+            return ""
 
     def read_data(self) -> str:
         """Reads the data input from the RFID"""
@@ -35,6 +58,15 @@ class Reader:
         """Writes new user info to an RFID tag. Waits for a tag to contact.
         Written info format:
         'entered_username|last_login_datetime('%Y-%m-%d %H:%M:%S')' """
+        user_info = self.encrypt_user_data(user)
+
+        try:
+            reader.write(user_info)
+        finally:
+            GPIO.cleanup()
+
+    def encrypt_user_data(self, user: User) -> bytes:
+        """Encrypts a user's information into a token"""
         user_info = ""
         attributes = [
             user.get_username(),
@@ -47,8 +79,6 @@ class Reader:
             user_info += "|"
 
         user_info = user_info[0:-1]
+        user_bytes = user_info.encode()
 
-        try:
-            reader.write((user_info))
-        finally:
-            GPIO.cleanup()
+        return f.encrypt(user_bytes)
