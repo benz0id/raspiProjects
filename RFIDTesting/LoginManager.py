@@ -9,7 +9,7 @@ from Exceptions import InvalidInput, InvalidUserCode
 from LogManager import LogManager
 from time import sleep
 import logging
-logging.basicConfig(filename='logs.log', level=logging.DEBUG)
+logging.basicConfig(level=logging.DEBUG)
 
 # User String Format:
 # "username | user_code | user_id"
