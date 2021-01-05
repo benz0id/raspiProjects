@@ -5,6 +5,7 @@ import sys
 import time
 import RPi.GPIO as GPIO
 import logging
+logging.basicConfig(filename="logs.log", level= logging.DEBUG)
 
 # Use BCM GPIO references
 # instead of physical pin numbers
@@ -35,7 +36,7 @@ StepDir = 1  # Set to 1 or 2 for clockwise
 # Set to -1 or -2 for anti-clockwise
 
 # Read wait time from command line
-WaitTime = float(0.01)
+WaitTime = float(1)
 
 # Initialise variables
 StepCounter = 0
