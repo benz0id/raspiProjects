@@ -53,7 +53,7 @@ class LogManager:
 
         if user.get_username() != username:
             raise InvalidInput("Username does not match username on record: " +
-                               user.get_username + "!=" + username)
+                               user.get_username() + "!=" + username)
         return user
 
     def register_new_user(self, user: User):
