@@ -38,13 +38,14 @@ class Reader:
     def get_tag_data(self) -> str:
         """Interprets and returns the data stored in the tag.
         #TODO add encryption to this function"""
+        read_data = self.read_data()
         try:
-            decr_data = f.decrypt(self.read_data().encode())
+            decr_data = f.decrypt(read_data.encode())
             user_data = decr_data.decode()
             print("User data: " + user_data)
             return user_data
         except InvalidToken:
-            print("Improperly encrypted data received")
+            print("Improperly encrypted data received: " + read_data)
             logging.info("Improperly encrypted data received")
             return ""
 
