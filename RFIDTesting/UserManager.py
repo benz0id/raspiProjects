@@ -37,19 +37,7 @@ class UserManager:
         """Writes new user info to an RFID tag. Waits for a tag to contact.
         Written info format:
         'entered_username|last_login_datetime('%Y-%m-%d %H:%M:%S')' """
-        attributes = user.get_attributes()
-        user_info = ""
-
-        for attribute in attributes:
-            user_info += str(attribute)
-            user_info += "|"
-
-        user_info = user_info[0:-1]
-
-        try:
-            self.reader.write(user_info)
-        finally:
-            GPIO.cleanup()
+        self.reader.write_user_to_tag(user)
 
     def user_from_input(self, user_data: str) -> User:
         """Returns a list of attributes extracted from an input string. Raises
