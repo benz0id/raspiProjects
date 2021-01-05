@@ -5,7 +5,7 @@ from datetime import datetime
 import Users
 import pickle
 import os.path
-from UserManager import InvalidInput
+from Exceptions import InvalidInput
 
 
 def str_to_date(input_str: str) -> datetime:

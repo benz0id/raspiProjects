@@ -7,17 +7,7 @@ from Reader import Reader
 from SecurityManager import SecurityManager
 from User import User
 from LogManager import LogManager
-
-
-class InvalidInput(Exception):
-    """Raised when input from the RFID tag does not match the expected
-    formatting."""
-    pass
-
-
-class InvalidUserCode(Exception):
-    """Raised when a user's code is invalid"""
-    pass
+from Exceptions import InvalidInput, InvalidUserCode
 
 
 class UserManager:

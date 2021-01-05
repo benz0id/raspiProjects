@@ -5,7 +5,7 @@ from Presenters import SimplePresenter, Presenter
 from SecurityManager import SecurityManager
 from UserManager import UserManager
 from User import User
-from UserManager import InvalidInput, InvalidUserCode
+from Exceptions import InvalidInput, InvalidUserCode
 from LogManager import LogManager
 from time import sleep
 
