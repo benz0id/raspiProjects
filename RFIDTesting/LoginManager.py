@@ -56,8 +56,10 @@ class LoginManager:
             user = self.user_manager.user_from_input(input_data)
             return user
         except InvalidInput:
+            logging.exception(InvalidInput)
             self.presenter.print("Bad Read or Invalid Key")
         except InvalidUserCode:
+            logging.exception(InvalidUserCode)
             self.presenter.print("User code invalid")
         return False
 
