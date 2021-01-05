@@ -89,11 +89,7 @@ class Reader:
     def get_user_data(self, user: User):
         """Gets a string representation of the user's info"""
         user_info = ""
-        attributes = [
-            user.get_username(),
-            (datetime.now().strftime('%Y-%m-%d %H:%M:%S')),
-            user.get_key()
-        ]
+        attributes = user.get_attributes()
 
         for attribute in attributes:
             user_info += str(attribute)
