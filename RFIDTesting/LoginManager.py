@@ -35,6 +35,7 @@ class LoginManager:
 
     def run_login_system(self):
         """Runs the login system continually"""
+        self.user_manager.register_new_user()
         # Main loop
         while True:
             # Fetch any data available from the RFID reader
