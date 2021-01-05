@@ -78,7 +78,7 @@ class Reader:
         ]
 
         for attribute in attributes:
-            user_info += attribute
+            user_info += str(attribute)
             user_info += "|"
 
         user_info = user_info[0:-1]
