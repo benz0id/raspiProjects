@@ -82,7 +82,7 @@ class UserManager:
             logging.info("Valid Key")
 
             return self.user_log_manager.get_user(int(attributes[2]),
-                                                  attributes[1])
+                                                  attributes[0])
         except IndexError:
             logging.exception(IndexError)
             raise InvalidInput
