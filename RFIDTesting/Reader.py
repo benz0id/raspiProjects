@@ -40,9 +40,12 @@ class Reader:
         #TODO add encryption to this function"""
         try:
             decr_data = f.decrypt(self.read_data().encode())
-            return decr_data.decode()
+            user_data = decr_data.decode()
+            print("User data: " + user_data)
+            return user_data
         except InvalidToken:
-            logging.info("Improperly decrypted data received")
+            print("Improperly encrypted data received")
+            logging.info("Improperly encrypted data received")
             return ""
 
     def read_data(self) -> str:
@@ -80,5 +83,7 @@ class Reader:
 
         user_info = user_info[0:-1]
         user_bytes = user_info.encode()
+        encr_user_data = f.encrypt(user_bytes)
+        print("User data encrypted to" + str(encr_user_data))
 
-        return f.encrypt(user_bytes)
+        return encr_user_data
