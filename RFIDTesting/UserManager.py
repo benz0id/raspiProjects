@@ -84,10 +84,10 @@ class UserManager:
             return self.user_log_manager.get_user(int(attributes[2]),
                                                   attributes[1])
         except IndexError:
-            logging.exception("IndexErr")
+            logging.exception(IndexError)
             raise InvalidInput
         except ValueError:
-            logging.exception("ValueErr")
+            logging.exception(ValueError)
             raise InvalidInput
         # TODO add more specific error messages
 
