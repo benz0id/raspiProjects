@@ -93,7 +93,7 @@ class CalibrationStepper:
         print("Runtime: " + str(datetime.now() - start))
         print("Target runtime: " + str(self.half_steps_completed * delay_time
                                        / 1000))
-        print("Goal runtime: " + str(radians / (2 * pi) / speed))
+        print("Goal runtime: " + str(radians / speed))
         self.half_steps_completed = 0
 
     def one_step_cycle(self, direction: int, delay_time: float):
@@ -108,10 +108,10 @@ class CalibrationStepper:
     def speed_to_milliseconds(self, speed: float) -> float:
         """Returns the delay time (in milliseconds) between each step/half step
         required to achieve the desired <speed>"""
-        rad_per_step = 2 * pi / self._steps
+        rad_per_step = 2 * pi / self._steps / (1 + self._mode)
         step_per_second = rad_per_step / speed
         # Converting to milliseconds and accounting for step mode
-        return step_per_second * 1000 / (1 + self._mode)
+        return step_per_second * 1000
 
     def disengage(self):
         """Disengages the motor."""
