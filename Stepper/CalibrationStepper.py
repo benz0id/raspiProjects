@@ -26,7 +26,7 @@ def delay(milliseconds: float):
     sleep(milliseconds / 1000)
 
 
-class Stepper:
+class CalibrationStepper:
     """A stepper motor driver."""
 
     # === Private Attributes ===
@@ -71,10 +71,15 @@ class Stepper:
         radians per second. Turns clockwise iff <direction> is 1 else turns
         counterclockwise"""
         delay_time = self.speed_to_milliseconds(speed)
+        print("Calculated delay time for each " + [
+            "full step: ", "full step: "][self._mode] + str(delay_time))
         rads_per_stp_cyc = 2 * pi / self._steps * len(self._seq) \
                                   / (1 + self._mode)
+        print("Calculated radians per step cycle" + str(rads_per_stp_cyc))
         stp_cycles = int(radians / rads_per_stp_cyc)
+        print("Calculated step cycles:" + str(stp_cycles))
         for _ in range(stp_cycles):
+            print("Step cycle #" + str(_))
             self.one_step_cycle(direction, delay_time)
         self.disengage()
 
