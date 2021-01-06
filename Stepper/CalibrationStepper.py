@@ -91,6 +91,8 @@ class CalibrationStepper:
         print(["full steps ", "half steps "][self._mode] + "completed: " +
               str(self.half_steps_completed))
         print("Runtime: " + str(datetime.now() - start))
+        print("Goal runtime: " + str(self.half_steps_completed * delay_time))
+        self.half_steps_completed = 0
 
     def one_step_cycle(self, direction: int, delay_time: float):
         """Turns the motor one step sequence in the specified direction, waiting
