@@ -3,6 +3,7 @@ import RPi.GPIO as GPIO
 import logging
 from typing import List
 from math import pi
+from math import ceil
 
 logging.basicConfig(filename="logs.log", level=logging.DEBUG)
 
@@ -73,7 +74,7 @@ class Stepper:
         delay_time = self.speed_to_milliseconds(speed)
         rads_per_stp_cyc = 2 * pi / self._steps * len(self._seq) \
                                   / (1 + self._mode)
-        stp_cycles = int(radians / rads_per_stp_cyc)
+        stp_cycles = ceil(radians / rads_per_stp_cyc)
         for _ in range(stp_cycles):
             self.one_step_cycle(direction, delay_time)
         self.disengage()

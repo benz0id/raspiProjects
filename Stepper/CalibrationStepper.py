@@ -3,6 +3,9 @@ import RPi.GPIO as GPIO
 import logging
 from typing import List
 from math import pi
+from datetime import datetime
+from math import ceil
+
 
 logging.basicConfig(filename="logs.log", level=logging.DEBUG)
 
@@ -31,14 +34,14 @@ class CalibrationStepper:
 
     # === Private Attributes ===
     # _step_pins:
-    #       The pins that should be written to in order to drive the stepper
+    #       The pins that should be written to in order to drive the stepper.
     # _num_pins:
-    #       The number of pins in the stepper
+    #       The number of pins in the stepper.
     # _steps:
-    #       The number of steps in a full rotation of the motor
+    #       The number of steps in a full rotation of the motor.
     # _seq:
     #       The sequence of steps taken to progress the motor, can be half or
-    #       full step
+    #       full step.
     # _mode:
     #       Indicates whether the motor is in half or full step mode.
     #       0 -> full step
@@ -52,6 +55,7 @@ class CalibrationStepper:
     _num_pins: int
     _seq: List[List[int]]
     _mode: int
+    half_steps_completed: int
 
     def __init__(self, step_pins: List[int], steps: int, seq: List[List[int]],
                  mode: int = 1):
@@ -70,18 +74,22 @@ class CalibrationStepper:
         """Turns the stepper motor <radians> degrees at a rate of <speed>
         radians per second. Turns clockwise iff <direction> is 1 else turns
         counterclockwise"""
+        start = datetime.now()
         delay_time = self.speed_to_milliseconds(speed)
         print("Calculated delay time for each " + [
-            "full step: ", "full step: "][self._mode] + str(delay_time))
+            "full step: ", "half step: "][self._mode] + str(delay_time))
         rads_per_stp_cyc = 2 * pi / self._steps * len(self._seq) \
                                   / (1 + self._mode)
         print("Calculated radians per step cycle" + str(rads_per_stp_cyc))
-        stp_cycles = int(radians / rads_per_stp_cyc)
+        stp_cycles = ceil(radians / rads_per_stp_cyc)
         print("Calculated step cycles:" + str(stp_cycles))
         for _ in range(stp_cycles):
             print("Step cycle #" + str(_))
             self.one_step_cycle(direction, delay_time)
         self.disengage()
+        print(["full steps ", "half steps "][self._mode] + "completed: " +
+              str(self.half_steps_completed))
+        print("Runtime: " + str(datetime.now() - start))
 
     def one_step_cycle(self, direction: int, delay_time: float):
         """Turns the motor one step sequence in the specified direction, waiting
@@ -89,6 +97,7 @@ class CalibrationStepper:
         for step in self._seq[::direction]:
             for i in range(self._num_pins):
                 GPIO.output(self._step_pins[i], step[i])
+            self.half_steps_completed += 1
             delay(delay_time)
 
     def speed_to_milliseconds(self, speed: float) -> float:
