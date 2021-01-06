@@ -5,6 +5,7 @@ from typing import List
 from math import pi
 from math import ceil
 from datetime import datetime
+
 logging.basicConfig(filename="logs.log", level=logging.DEBUG)
 
 # Use BCM GPIO references
@@ -12,14 +13,20 @@ logging.basicConfig(filename="logs.log", level=logging.DEBUG)
 GPIO.setmode(GPIO.BCM)
 
 # A half step sequence for the 28BYJ-28 stepper motor
-SEQ_28BYJ_28 = [[1, 0, 0, 1],
-                [1, 0, 0, 0],
-                [1, 1, 0, 0],
-                [0, 1, 0, 0],
-                [0, 1, 1, 0],
-                [0, 0, 1, 0],
-                [0, 0, 1, 1],
-                [0, 0, 0, 1]]
+SEQ_HALF_28BYJ_28 = [[1, 0, 0, 1],
+                     [1, 0, 0, 0],
+                     [1, 1, 0, 0],
+                     [0, 1, 0, 0],
+                     [0, 1, 1, 0],
+                     [0, 0, 1, 0],
+                     [0, 0, 1, 1],
+                     [0, 0, 0, 1]]
+
+# A full step sequence for the 28BYJ-28 stepper motor
+SEQ_full_28BYJ_28 = [[1, 0, 0, 0],
+                     [0, 1, 0, 0],
+                     [0, 0, 1, 0],
+                     [0, 0, 0, 1]]
 
 
 def delay(milliseconds: float):
@@ -75,7 +82,7 @@ class Stepper:
         start = datetime.now()
         delay_time = self.speed_to_milliseconds(speed)
         rads_per_stp_cyc = 2 * pi / self._steps * len(self._seq) \
-                                  / (1 + self._mode)
+                           / (1 + self._mode)
         stp_cycles = ceil(radians / rads_per_stp_cyc)
         for _ in range(stp_cycles):
             self.one_step_cycle(direction, delay_time)

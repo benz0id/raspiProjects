@@ -14,14 +14,20 @@ logging.basicConfig(filename="logs.log", level=logging.DEBUG)
 GPIO.setmode(GPIO.BCM)
 
 # A half step sequence for the 28BYJ-28 stepper motor
-SEQ_28BYJ_28 = [[1, 0, 0, 1],
-                [1, 0, 0, 0],
-                [1, 1, 0, 0],
-                [0, 1, 0, 0],
-                [0, 1, 1, 0],
-                [0, 0, 1, 0],
-                [0, 0, 1, 1],
-                [0, 0, 0, 1]]
+SEQ_HALF_28BYJ_28 = [[1, 0, 0, 1],
+                     [1, 0, 0, 0],
+                     [1, 1, 0, 0],
+                     [0, 1, 0, 0],
+                     [0, 1, 1, 0],
+                     [0, 0, 1, 0],
+                     [0, 0, 1, 1],
+                     [0, 0, 0, 1]]
+
+# A full step sequence for the 28BYJ-28 stepper motor
+SEQ_full_28BYJ_28 = [[1, 0, 0, 0],
+                     [0, 1, 0, 0],
+                     [0, 0, 1, 0],
+                     [0, 0, 0, 1]]
 
 
 def delay(milliseconds: float):
