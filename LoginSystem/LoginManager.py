@@ -35,19 +35,25 @@ class LoginManager:
                                         self.security_manager,
                                         self.user_log_manager)
 
-    def run_login_system(self):
-        """Runs the login system continually"""
+    def run_login_system(self) -> int:
+        """Runs the login system"""
         self.user_manager.register_new_user()
         # Main loop
-        while True:
-            # Fetch any data available from the RFID reader
-            data = self.reader.get_tag_data()
+        # Fetch any data available from the RFID reader
+        data = self.reader.get_tag_data()
+        valid_user = self.check_for_user(data)
+        if valid_user:
+            self.run_sign_in_process(valid_user)
 
-            # Handle the data received
-            self.handle_received_data(data)
+        return valid_user.get_id()
 
-            # Wait two seconds
-            sleep(2)
+
+    def add_new_user(self):
+        """Adds a new user to the directory"""
+
+
+    def run_login(self):
+        """Runs the login system once"""
 
     def check_for_user(self, input_data: str) -> bool or User:
         """Checks if the data is a valid users' data. Shows corresponding error
@@ -62,12 +68,6 @@ class LoginManager:
             logging.exception(InvalidUserCode)
             self.presenter.print("User code invalid")
         return False
-
-    def handle_received_data(self, input_data: str):
-        """Handles the process that occurs after user data is received."""
-        valid_user = self.check_for_user(input_data)
-        if valid_user:
-            self.run_sign_in_process(valid_user)
 
     def run_sign_in_process(self, user: User):
         """Runs the series of events that should occur when a user taps onto the
