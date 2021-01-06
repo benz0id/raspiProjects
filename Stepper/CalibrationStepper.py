@@ -65,6 +65,7 @@ class CalibrationStepper:
         self._mode = mode
         self._num_pins = len(step_pins)
         self._seq = seq
+        self.half_steps_completed = 0
         logging.info("Setting up stepper pins as output")
         for pin in step_pins:
             GPIO.setup(pin, GPIO.OUT)
