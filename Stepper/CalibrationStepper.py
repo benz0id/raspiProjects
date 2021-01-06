@@ -91,7 +91,8 @@ class CalibrationStepper:
         print(["full steps ", "half steps "][self._mode] + "completed: " +
               str(self.half_steps_completed))
         print("Runtime: " + str(datetime.now() - start))
-        print("Goal runtime: " + str(self.half_steps_completed * delay_time))
+        print("Goal runtime: " + str(self.half_steps_completed * delay_time
+                                     / 1000))
         self.half_steps_completed = 0
 
     def one_step_cycle(self, direction: int, delay_time: float):

@@ -4,7 +4,7 @@ import logging
 from typing import List
 from math import pi
 from math import ceil
-
+from datetime import datetime
 logging.basicConfig(filename="logs.log", level=logging.DEBUG)
 
 # Use BCM GPIO references
@@ -62,6 +62,7 @@ class Stepper:
         self._mode = mode
         self._num_pins = len(step_pins)
         self._seq = seq
+        self.half_steps_completed = 0
         logging.info("Setting up stepper pins as output")
         for pin in step_pins:
             GPIO.setup(pin, GPIO.OUT)
@@ -71,6 +72,7 @@ class Stepper:
         """Turns the stepper motor <radians> degrees at a rate of <speed>
         radians per second. Turns clockwise iff <direction> is 1 else turns
         counterclockwise"""
+        start = datetime.now()
         delay_time = self.speed_to_milliseconds(speed)
         rads_per_stp_cyc = 2 * pi / self._steps * len(self._seq) \
                                   / (1 + self._mode)
@@ -78,6 +80,9 @@ class Stepper:
         for _ in range(stp_cycles):
             self.one_step_cycle(direction, delay_time)
         self.disengage()
+        print("Runtime: " + str(datetime.now() - start))
+        print("Goal runtime: " + str(radians / 2 * pi / speed))
+        self.half_steps_completed = 0
 
     def one_step_cycle(self, direction: int, delay_time: float):
         """Turns the motor one step sequence in the specified direction, waiting
