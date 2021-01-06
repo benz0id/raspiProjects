@@ -81,7 +81,7 @@ class Stepper:
             self.one_step_cycle(direction, delay_time)
         self.disengage()
         print("Runtime: " + str(datetime.now() - start))
-        print("Goal runtime: " + str(radians / 2 * pi / speed))
+        print("Goal runtime: " + str(radians / (2 * pi) / speed))
         self.half_steps_completed = 0
 
     def one_step_cycle(self, direction: int, delay_time: float):
