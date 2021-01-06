@@ -92,7 +92,7 @@ class CalibrationStepper:
               str(self.half_steps_completed))
         print("Runtime: " + str(datetime.now() - start))
         print("Target runtime: " + str(self.half_steps_completed * delay_time
-                                     / 1000))
+                                       / 1000))
         print("Goal runtime: " + str(radians / (2 * pi) / speed))
         self.half_steps_completed = 0
 
