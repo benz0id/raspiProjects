@@ -36,7 +36,7 @@ StepDir = 1  # Set to 1 or 2 for clockwise
 # Set to -1 or -2 for anti-clockwise
 
 # Read wait time from command line
-WaitTime = float(0.001)
+WaitTime = float(0.0001)
 
 # Initialise variables
 StepCounter = 0
