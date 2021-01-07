@@ -1,6 +1,5 @@
 from CalibrationStepper import CalibrationStepper, SEQ_HALF_28BYJ_28
 from devices.stepper.Stepper import Stepper
-from math import pi
 
 seq = SEQ_HALF_28BYJ_28
 mode = 1
