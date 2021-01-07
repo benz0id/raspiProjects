@@ -14,14 +14,14 @@ logging.basicConfig(filename="logs.log", level=logging.DEBUG)
 GPIO.setmode(GPIO.BCM)
 
 # A half step sequence for the 28BYJ-28 stepper motor
-SEQ_HALF_28BYJ_28 = [[1, 0, 0, 1],
-                     [1, 0, 0, 0],
+SEQ_HALF_28BYJ_28 = [[1, 0, 0, 0],
                      [1, 1, 0, 0],
                      [0, 1, 0, 0],
                      [0, 1, 1, 0],
                      [0, 0, 1, 0],
                      [0, 0, 1, 1],
-                     [0, 0, 0, 1]]
+                     [0, 0, 0, 1],
+                     [1, 0, 0, 1]]
 
 # A full step sequence for the 28BYJ-28 stepper motor
 SEQ_FULL_28BYJ_28 = [[1, 0, 0, 0],
@@ -77,10 +77,14 @@ class CalibrationStepper:
             GPIO.setup(pin, GPIO.OUT)
             GPIO.output(pin, False)
 
-    def turn(self, direction: int, speed: float, radians: float):
+    def turn(self, direction: int, speed: float, radians: float,
+             simple_half_step: bool = False, simple_full_step: bool = False):
         """Turns the stepper motor <radians> degrees at a rate of <speed>
         radians per second. Turns clockwise iff <direction> is 1 else turns
-        counterclockwise"""
+        counterclockwise.
+        Precondition:
+            not simple_half_set and simple_full set
+        """
         start = datetime.now()
         delay_time = self.speed_to_milliseconds(speed)
         print("Calculated delay time for each " + [
@@ -90,9 +94,14 @@ class CalibrationStepper:
         print("Calculated radians per step cycle" + str(rads_per_stp_cyc))
         stp_cycles = ceil(radians / rads_per_stp_cyc)
         print("Calculated step cycles:" + str(stp_cycles))
-        for _ in range(stp_cycles):
-            print("Step cycle #" + str(_))
-            self.one_step_cycle(direction, delay_time)
+        if simple_half_step:
+            self.half_step_cycle(stp_cycles, delay_time, direction)
+        elif simple_full_step:
+            self.full_step_cycle(stp_cycles, delay_time, direction)
+        else:
+            for _ in range(stp_cycles):
+                print("Step cycle #" + str(_))
+                self.one_step_cycle_from_seq(direction, delay_time)
         self.disengage()
         print(["full steps ", "half steps "][self._mode] + "completed: " +
               str(self.half_steps_completed))
@@ -102,7 +111,9 @@ class CalibrationStepper:
         print("Goal runtime: " + str(radians / speed))
         self.half_steps_completed = 0
 
-    def one_step_cycle(self, direction: int, delay_time: float):
+
+
+    def one_step_cycle_from_seq(self, direction: int, delay_time: float):
         """Turns the motor one step sequence in the specified direction, waiting
         delay time milliseconds between each step"""
         for step in self._seq[::direction]:
@@ -110,6 +121,59 @@ class CalibrationStepper:
                 GPIO.output(self._step_pins[i], step[i])
             self.half_steps_completed += 1
             delay(delay_time)
+
+    def half_step_cycle(self, num_half_step_cycles: int, delay_time: float,
+                        direction: int):
+        """Turns the motor <num_half_step_cycles> in <direction> with <delay>
+        between each half step. Turns clockwise iff <direction> is 1 else turns
+        counterclockwise"""
+        self.disengage()
+        if not direction:
+            pins_len = len(self._step_pins) - 1
+            GPIO.output(self._step_pins[- 1], 1)
+            GPIO.output(self._step_pins[0], 1)
+            delay(delay_time)
+            for _ in range(num_half_step_cycles):
+                for i in range(-1, pins_len):
+                    GPIO.output(self._step_pins[i - 1], 0)
+                    delay(delay_time)
+                    GPIO.output(self._step_pins[i + 1], 1)
+                    delay(delay_time)
+        else:
+            pins_len = len(self._step_pins) - 2
+            GPIO.output(self._step_pins[0], 1)
+            delay(delay_time)
+            for _ in range(num_half_step_cycles):
+                for i in range(pins_len, -2, -1):
+                    GPIO.output(self._step_pins[i + 1], 0)
+                    delay(delay_time)
+                    GPIO.output(self._step_pins[i - 1], 1)
+                    delay(delay_time)
+
+    def full_step_cycle(self, num_step_cycles: int, delay_time: float,
+                        direction: int):
+        """Turns the motor <num_step_cycles> in <direction> with <delay> between
+        each step. Turns clockwise iff <direction> is 1 else turns
+        counterclockwise"""
+        self.disengage()
+        if not direction:
+            pins_len = len(self._step_pins)
+            GPIO.output(self._step_pins[-1], 1)
+            delay(delay_time)
+            for _ in range(num_step_cycles):
+                for i in range(pins_len):
+                    GPIO.output(self._step_pins[i - 1], 0)
+                    GPIO.output(self._step_pins[i], 1)
+                    delay(delay_time)
+        else:
+            pins_len = len(self._step_pins) - 2
+            GPIO.output(self._step_pins[0], 1)
+            delay(delay_time)
+            for _ in range(num_step_cycles):
+                for i in range(pins_len, -2, -1):
+                    GPIO.output(self._step_pins[i], 0)
+                    GPIO.output(self._step_pins[i + 1], 1)
+                    delay(delay_time)
 
     def speed_to_milliseconds(self, speed: float) -> float:
         """Returns the delay time (in milliseconds) between each step/half step
