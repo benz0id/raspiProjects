@@ -1,13 +1,11 @@
 import logging
 
-from Presenters import Presenter
-from datetime import datetime
-import RPi.GPIO as GPIO
-from Reader import Reader
-from SecurityManager import SecurityManager
-from User import User
-from LogManager import LogManager
-from Exceptions import InvalidInput, InvalidUserCode
+from presenters import Presenter
+from devices.reader import Reader
+from security_manager import SecurityManager
+from user import User
+from log_record_manager import LogManager
+from login_exceptions import InvalidInput, InvalidUserCode
 
 
 class UserManager:
@@ -34,10 +32,31 @@ class UserManager:
         self.presenter.print("Welcome, " + user_txt)
 
     def write_user_to_tag(self, user: User):
-        """Writes new user info to an RFID tag. Waits for a tag to contact.
-        Written info format:
-        'entered_username|last_login_datetime('%Y-%m-%d %H:%M:%S')' """
-        self.reader.write_user_to_tag(user)
+        """Writes new user info to an RFID tag. Waits for a tag to contact."""
+        user_info = self.get_user_data(user)
+        self.reader.write(str(user_info))
+
+    """def encrypt_user_data(self, user: User) -> bytes:
+        Encrypts a user's information into a token
+        user_info = self.get_user_data(user)
+        
+        user_info = user_info[0:-1]
+        user_bytes = user_info.encode()
+        encr_user_data = f.encrypt(user_bytes)
+        print("User data encrypted to" + str(encr_user_data))
+
+        return encr_user_data"""
+
+    def get_user_data(self, user: User):
+        """Gets a string representation of the user's info"""
+        user_info = ""
+        attributes = user.get_attributes()
+
+        for attribute in attributes:
+            user_info += str(attribute)
+            user_info += "|"
+
+        return user_info[0:-1]
 
     def user_from_input(self, user_data: str) -> User:
         """Returns a list of attributes extracted from an input string. Raises

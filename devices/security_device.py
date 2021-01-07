@@ -1,8 +1,8 @@
 import RPi.GPIO as GPIO
 
-"""A security device"""
-class Device:
 
+class SecurityDevice:
+    """A security device"""
     pin: int
     name: str
 
@@ -14,8 +14,3 @@ class Device:
         self.pin = pin
         self.name = name
         self.default_state = default_state
-
-
-
-
-

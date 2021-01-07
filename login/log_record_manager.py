@@ -1,11 +1,11 @@
 from typing import BinaryIO
 import logging
-from User import User
+from user import User
 from datetime import datetime
 import Users
 import pickle
 import os.path
-from Exceptions import InvalidInput
+from login_exceptions import InvalidInput
 
 
 def str_to_date(input_str: str) -> datetime:
@@ -100,7 +100,7 @@ class LogManager:
                                     " hrs ago"
 
         login_str += "Welcome back " + user.get_username() + "\n" + \
-                     "Your last login was at:\n" + \
+                     "Your last loginsystem was at:\n" + \
                      str(last_login.strftime("%b %d %Y %I:%M%p")) + "\n" + \
                      time_since_last_login_str
 

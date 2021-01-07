@@ -1,13 +1,10 @@
-from datetime import datetime
-from typing import Tuple
-from Reader import Reader
-from Presenters import SimplePresenter, Presenter
-from SecurityManager import SecurityManager
-from UserManager import UserManager
-from User import User
-from Exceptions import InvalidInput, InvalidUserCode
-from LogManager import LogManager
-from time import sleep
+from devices.reader import Reader
+from presenters import SimplePresenter, Presenter
+from security_manager import SecurityManager
+from user_manager import UserManager
+from user import User
+from login_exceptions import InvalidInput, InvalidUserCode
+from log_record_manager import LogManager
 import logging
 logging.basicConfig(filename="logs.log", level= logging.DEBUG)
 
@@ -36,7 +33,7 @@ class LoginManager:
                                         self.user_log_manager)
 
     def run_login_system(self) -> int:
-        """Runs the login system"""
+        """Runs the loginsystem system"""
         self.user_manager.register_new_user()
         # Main loop
         # Fetch any data available from the RFID reader
@@ -53,7 +50,7 @@ class LoginManager:
 
 
     def run_login(self):
-        """Runs the login system once"""
+        """Runs the loginsystem system once"""
 
     def check_for_user(self, input_data: str) -> bool or User:
         """Checks if the data is a valid users' data. Shows corresponding error
