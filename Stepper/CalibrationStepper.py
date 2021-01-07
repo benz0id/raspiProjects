@@ -24,7 +24,7 @@ SEQ_HALF_28BYJ_28 = [[1, 0, 0, 1],
                      [0, 0, 0, 1]]
 
 # A full step sequence for the 28BYJ-28 stepper motor
-SEQ_full_28BYJ_28 = [[1, 0, 0, 0],
+SEQ_FULL_28BYJ_28 = [[1, 0, 0, 0],
                      [0, 1, 0, 0],
                      [0, 0, 1, 0],
                      [0, 0, 0, 1]]
