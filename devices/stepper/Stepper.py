@@ -83,7 +83,7 @@ class Stepper:
         Precondition:
             not simple_half_set and simple_full set
         """
-        self.turn_rad(direction, speed / (2 * pi), rotations / (2 * pi),
+        self.turn_rad(direction, speed * 2 * pi, rotations * 2 * pi,
                       simple_half_step=simple_half_step,
                       simple_full_step=simple_full_step)
 
