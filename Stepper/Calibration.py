@@ -4,7 +4,7 @@ from Stepper import Stepper
 from math import pi
 
 seq = SEQ_HALF_28BYJ_28
-mode = 0
+mode = 1
 
 step_pins = [19, 26, 16, 20]
 stepper = CalibrationStepper(step_pins, 2048, seq, mode)
