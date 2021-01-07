@@ -111,9 +111,7 @@ class CalibrationStepper:
         elif simple_full_step:
             self.full_step_cycle(stp_cycles, delay_time, direction)
         else:
-            for _ in range(stp_cycles):
-                print("Step cycle #" + str(_))
-                self.one_step_cycle_from_seq(direction, delay_time)
+            self.step_cycle_from_seq(direction, delay_time)
         self.disengage()
         print(["full steps ", "half steps "][self._mode] + "completed: " +
               str(self.half_steps_completed))
@@ -123,14 +121,19 @@ class CalibrationStepper:
         print("Goal runtime: " + str(radians / speed))
         self.half_steps_completed = 0
 
-    def one_step_cycle_from_seq(self, direction: int, delay_time: float):
+    def step_cycle_from_seq(self, step_cycles: int, direction: int,
+                            delay_time: float):
         """Turns the motor one step sequence in the specified direction, waiting
         delay time milliseconds between each step"""
-        for step in self._seq[::direction]:
-            for i in range(self._num_pins):
-                GPIO.output(self._step_pins[i], step[i])
-            self.half_steps_completed += 1
-            delay(delay_time)
+        if direction != 1:
+            direction = -1
+        for _ in range(step_cycles):
+            print("Step cycle #" + str(_))
+            for step in self._seq[::direction]:
+                for i in range(self._num_pins):
+                    GPIO.output(self._step_pins[i], step[i])
+                self.half_steps_completed += 1
+                delay(delay_time)
 
     def half_step_cycle(self, num_half_step_cycles: int, delay_time: float,
                         direction: int):
