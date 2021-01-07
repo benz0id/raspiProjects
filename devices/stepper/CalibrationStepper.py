@@ -111,7 +111,7 @@ class CalibrationStepper:
         elif simple_full_step:
             self.full_step_cycle(stp_cycles, delay_time, direction)
         else:
-            self.step_cycle_from_seq(direction, delay_time)
+            self.step_cycle_from_seq(stp_cycles, direction, delay_time)
         self.disengage()
         print(["full steps ", "half steps "][self._mode] + "completed: " +
               str(self.half_steps_completed))
