@@ -8,6 +8,6 @@ step_pins = [19, 26, 16, 20]
 stepper = Stepper(step_pins, 2048, seq, mode)
 stepper1 = Stepper(step_pins, 2048, seq, mode)
 print("Turning the cstepper")
-stepper.turn(1, 0.25, 1)
+stepper.turn(0, 0.25, 1)
 print("Turning the stepper")
-stepper1.turn(0, 0.25, 1)
+stepper1.turn(1, 0.25, 1)
