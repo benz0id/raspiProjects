@@ -51,7 +51,7 @@ class LCD(Presenter):
         self.last_turned_on = datetime.now()
 
     def check_lcd(self):
-        """Check if the LCD is currently being used, if the lcd hasn't been used
+        """Check if the lcd is currently being used, if the lcd hasn't been used
         in LCD_ON_TIME seconds, then it is turned off. Checks every 30 seconds.
         """
         while self.lcd.is_on:
@@ -65,7 +65,7 @@ class LCD(Presenter):
 
     def begin_off_timer(self):
         """If it is not already running begins the thread that regulates the
-        LCD"""
+        lcd"""
         mutex.acquire()
         self.lcd.lcd_clear()
         self.lcd.backlight(1)
@@ -76,16 +76,16 @@ class LCD(Presenter):
         mutex.release()
 
     def print(self, to_show: str):
-        """Shows the given string on the the LCD"""
+        """Shows the given string on the the lcd"""
         str_list = self.to_lines_list(to_show)
         self.begin_off_timer()
-        logging.info("Printing to LCD")
+        logging.info("Printing to lcd")
         try:
             for i in range(len(str_list)):
                 logging.info("Printing:" + str_list[i] + " at index " + str(i))
                 self.lcd.lcd_display_string(str_list[i], i)
         except IOError:
-            logging.error("Failed to print to LCD")
+            logging.error("Failed to print to lcd")
 
     def input(self, to_show: str) -> str:
         """Shows the text to the user and fetches their input."""
@@ -111,11 +111,11 @@ class LCD(Presenter):
 
         for s in to_break:
             if len(s) > self.LINE_LENGTH:
-                warning("LCD line length exceeded.\n Max: " +
+                warning("lcd line length exceeded.\n Max: " +
                         str(self.LINE_LENGTH) + "\nReached: " + str(len(s)) +
                         "\nOffending line \"" + s + "\"")
         if len(broken_strs) > self.NUM_LINES:
-            warning("Number of LCD lines exceeded.\n Max: " +
+            warning("Number of lcd lines exceeded.\n Max: " +
                     str(self.NUM_LINES) + "\nReached: " + str(
                 len(broken_strs)) +
                     "\nOffending message: \"" + to_break + "\"")

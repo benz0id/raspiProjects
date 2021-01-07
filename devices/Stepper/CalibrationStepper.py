@@ -111,8 +111,6 @@ class CalibrationStepper:
         print("Goal runtime: " + str(radians / speed))
         self.half_steps_completed = 0
 
-
-
     def one_step_cycle_from_seq(self, direction: int, delay_time: float):
         """Turns the motor one step sequence in the specified direction, waiting
         delay time milliseconds between each step"""
