@@ -77,7 +77,19 @@ class CalibrationStepper:
             GPIO.setup(pin, GPIO.OUT)
             GPIO.output(pin, False)
 
-    def turn(self, direction: int, speed: float, radians: float,
+    def turn(self, direction: int, speed: float, rotations: float,
+             simple_half_step: bool = False, simple_full_step: bool = False):
+        """Turns the stepper motor <rotations> a rate of <speed>
+        rotations per second. Turns clockwise iff <direction> is 1 else turns
+        counterclockwise.
+        Precondition:
+            not simple_half_set and simple_full set
+        """
+        self.turn_rad(direction, speed / (2 * pi), rotations / (2 * pi),
+                      simple_half_step=simple_half_step,
+                      simple_full_step=simple_full_step)
+
+    def turn_rad(self, direction: int, speed: float, radians: float,
              simple_half_step: bool = False, simple_full_step: bool = False):
         """Turns the stepper motor <radians> degrees at a rate of <speed>
         radians per second. Turns clockwise iff <direction> is 1 else turns
@@ -110,8 +122,6 @@ class CalibrationStepper:
                                        / 1000))
         print("Goal runtime: " + str(radians / speed))
         self.half_steps_completed = 0
-
-
 
     def one_step_cycle_from_seq(self, direction: int, delay_time: float):
         """Turns the motor one step sequence in the specified direction, waiting
