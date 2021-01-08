@@ -20,7 +20,7 @@ def date_to_str(input_date: datetime) -> str:
 class LogManager:
 
     latest_user_id: int
-    base_path = os.path.join("Users")
+    base_path = os.path.join("login", "users")
 
     def __init__(self):
         filepath = os.path.join(self.base_path)
