@@ -18,8 +18,8 @@ LCD_PINS = None
 # Other custom stepper info can be added in stepper
 STEPPER_PINS = [19, 26, 16, 20]
 
-# The lock locks by moving in this direction (when looking down the shaft,
-# 1 -> counter clockwise, -1 -> clockwise).
+# The lock locks by moving in this direction (when looking up the shaft,
+# 0 -> counter clockwise, 1 -> clockwise).
 LOCK_DIRECTION = 1
 
 # The number of stepper turns required to unlock/unlock the lock
