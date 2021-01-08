@@ -69,7 +69,7 @@ class RFIDLoginController(Subject):
         reader."""
         logging.debug("Checking timed processes")
         if not (self.get_cur_user_id() == self._last_sign_in_id and
-                datetime.now() - self._last_sign_in >
+                datetime.now() - self._last_sign_in <
                 timedelta(0, LOGIN_DELAY)):
             self._presenter.print(self.get_cur_login_str())
             self._user_log_manager.add_tap_log(self.get_cur_user_id())
