@@ -3,7 +3,6 @@ from typing import List
 
 from design_patterns.observer import Observer
 from .device import Device
-print("In the lock")
 from .stepper import Stepper
 
 
@@ -64,14 +63,18 @@ class Lock(Device):
     def unlock(self):
         """Unlocks the lock."""
         self._is_running = True
+        print("starting")
         self._stepper_thread = Thread(self._stepper.turn(
                                       self._lock_direction - 1,
                                       self._stepper_speed,
                                       self._rotations_to_unlock))
         self._stepper_thread.start()
+        print("stopping")
         self._is_running = False
         self._is_locked = False
         self.notify()
+
+
 
 
     def set_status(self, is_locked: bool):

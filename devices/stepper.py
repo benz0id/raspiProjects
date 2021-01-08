@@ -8,7 +8,6 @@ from datetime import datetime
 
 # Use BCM GPIO references
 # instead of physical pin numbers
-print("setting gpio")
 GPIO.setmode(GPIO.BCM)
 
 # A half step sequence for the 28BYJ-28 stepper motor
