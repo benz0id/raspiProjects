@@ -13,10 +13,7 @@ class Reader:
 
     def write(self, string: str):
         """Writes a given string to the tag"""
-        try:
-            self.reader.write(string)
-        finally:
-            GPIO.cleanup()
+        self.reader.write(string)
 
     def get_tag_data(self) -> str:
         """Interprets and returns the data stored in the tag.
@@ -25,9 +22,6 @@ class Reader:
 
     def read_data(self) -> str:
         """Reads the data input from the RFID"""
-        try:
-            tag_id, user_info = self.reader.read()
-        finally:
-            GPIO.cleanup()
+        tag_id, user_info = self.reader.read()
         # TODO add a logger for all tag_ids added
         return user_info
