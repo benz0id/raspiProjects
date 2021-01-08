@@ -2,8 +2,8 @@ from threading import Thread
 from typing import List
 
 from design_patterns.observer import Observer
-from devices.device import Device
-from stepper import Stepper
+from .device import Device
+from .stepper import Stepper
 
 
 class Lock(Device):

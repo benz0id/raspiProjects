@@ -1,10 +1,10 @@
 from typing import List
 
 from design_patterns.observer import Observer, Subject
-from lock import Lock
-from presenters import Presenter
-from reader import Reader
-from security_device import SecurityDevice
+from .lock import Lock
+from .presenters import Presenter
+from .reader import Reader
+from .security_device import SecurityDevice
 
 
 class DeviceController(Observer):

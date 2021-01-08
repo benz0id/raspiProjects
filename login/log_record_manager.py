@@ -4,8 +4,8 @@ import pickle
 from datetime import datetime
 from typing import BinaryIO
 
-from login_exceptions import InvalidInput
-from user import User
+from .login_exceptions import InvalidInput
+from .user import User
 
 
 def str_to_date(input_str: str) -> datetime:
