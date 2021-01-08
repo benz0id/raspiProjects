@@ -17,58 +17,55 @@ logging.basicConfig(filename="logs.log", level= logging.DEBUG)
 
 class LoginManager:
 
-    security_manager: SecurityManager
-    reader: Reader
-    presenter: Presenter
-    user_log_manager: LogManager
-    user_manager: UserManager
+    _security_manager: SecurityManager
+    _reader: Reader
+    _presenter: Presenter
+    _user_log_manager: LogManager
+    _user_manager: UserManager
 
     def __init__(self, reader: Reader,
                  presenter: Presenter = ConsolePresenter()):
         """Creates a new LoginManager with a certain presenter strategy"""
-        self.security_manager = SecurityManager()
-        self.reader = reader
-        self.presenter = presenter
-        self.user_log_manager = LogManager()
-        self.user_manager = UserManager(presenter, self.reader,
-                                        self.security_manager,
-                                        self.user_log_manager)
+        self._security_manager = SecurityManager()
+        self._reader = reader
+        self._presenter = presenter
+        self._user_log_manager = LogManager()
+        self._user_manager = UserManager(presenter, self._reader,
+                                         self._security_manager,
+                                         self._user_log_manager)
 
     def run_login_system(self) -> int:
         """Runs the login system system, returns a userID if found"""
-        self.user_manager.register_new_user()
+        self._user_manager.register_new_user()
         # Main loop
         # Fetch any data available from the RFID reader
-        data = self.reader.get_tag_data()
+        data = self._reader.get_tag_data()
         valid_user = self.check_for_user(data)
         if valid_user:
             self.run_sign_in_process(valid_user)
 
         return valid_user.get_id()
 
-
     def add_new_user(self):
         """Adds a new user to the directory"""
-
-    def run_login(self):
-        """Runs the loginsystem system once"""
+        self._user_manager.register_new_user()
 
     def check_for_user(self, input_data: str) -> bool or User:
         """Checks if the data is a valid users' data. Shows corresponding error
         messages iff the user's data isn't formatted properly."""
         try:
-            user = self.user_manager.user_from_input(input_data)
+            user = self._user_manager.user_from_input(input_data)
             return user
         except InvalidInput:
             logging.exception(InvalidInput)
-            self.presenter.print("Bad Read or Invalid Key")
+            self._presenter.print("Bad Read or Invalid Key")
         except InvalidUserCode:
             logging.exception(InvalidUserCode)
-            self.presenter.print("User code invalid")
+            self._presenter.print("User code invalid")
         return False
 
     def run_sign_in_process(self, user: User):
         """Runs the series of events that should occur when a user taps onto the
         reader."""
-        self.presenter.print(self.user_log_manager.get_login_str(user))
-        self.user_log_manager.add_tap_log(user)
+        self._presenter.print(self._user_log_manager.get_login_str(user))
+        self._user_log_manager.add_tap_log(user)
