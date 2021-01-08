@@ -129,7 +129,7 @@ class Stepper:
         for _ in range(step_cycles):
             for step in self._seq[::direction]:
                 for i in range(self._num_pins):
-                    print("turning on pin" + str(i))
+                    print("turning on pin" + str(self._step_pins[i]))
                     GPIO.output(self._step_pins[i], step[i])
                 delay(delay_time)
 
