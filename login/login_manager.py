@@ -1,11 +1,13 @@
+import logging
+
 from devices.reader import Reader
+from log_record_manager import LogManager
+from login_exceptions import InvalidInput, InvalidUserCode
 from presenters import ConsolePresenter, Presenter
 from security_manager import SecurityManager
-from user_manager import UserManager
 from user import User
-from login_exceptions import InvalidInput, InvalidUserCode
-from log_record_manager import LogManager
-import logging
+from user_manager import UserManager
+
 logging.basicConfig(filename="logs.log", level= logging.DEBUG)
 
 # User String Format:

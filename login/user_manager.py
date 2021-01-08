@@ -1,12 +1,12 @@
 import logging
 from datetime import datetime
 
-from presenters import Presenter
 from devices.reader import Reader
-from security_manager import SecurityManager
-from user import User
 from log_record_manager import LogManager
 from login_exceptions import InvalidInput, InvalidUserCode
+from presenters import Presenter
+from security_manager import SecurityManager
+from user import User
 
 
 def get_user_data(user: User):

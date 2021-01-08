@@ -1,11 +1,12 @@
 import logging
 from abc import abstractmethod
-from logging import warning
-from threading import Thread, Lock
 from datetime import datetime, timedelta
+from logging import warning
+from threading import Lock, Thread
 from time import sleep
-import lcd_driver
 from typing import List
+
+import lcd_driver
 
 mutex = Lock()
 

@@ -1,7 +1,9 @@
-from login.rfid_login_controller import RFIDLoginController
-from devices import stepper, misc_info, presenters, reader, device_controller, \
-    lock
 import logging
+
+from devices import device_controller, lock, misc_info, presenters, reader, \
+    stepper
+from login.rfid_login_controller import RFIDLoginController
+
 logging.basicConfig(filename="logs.log", level=logging.DEBUG)
 
 stepper_motor = stepper.Stepper(misc_info.STEPPER_PINS, stepper.NUM_STEPS_28BYJ_28,

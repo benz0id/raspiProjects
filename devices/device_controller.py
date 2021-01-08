@@ -1,10 +1,10 @@
-from lock import Lock
-from reader import Reader
-from stepper import Stepper
-from presenters import Presenter
-from security_device import SecurityDevice
 from typing import List
+
 from DPs.observer import Observer, Subject
+from lock import Lock
+from presenters import Presenter
+from reader import Reader
+from security_device import SecurityDevice
 
 
 class DeviceController(Observer):

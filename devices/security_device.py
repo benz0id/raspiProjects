@@ -1,6 +1,3 @@
-import RPi.GPIO as GPIO
-
-
 class SecurityDevice:
     """A security device"""
     pin: int

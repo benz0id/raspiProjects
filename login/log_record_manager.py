@@ -1,11 +1,11 @@
-from typing import BinaryIO
 import logging
-from user import User
-from datetime import datetime
-import Users
-import pickle
 import os.path
+import pickle
+from datetime import datetime
+from typing import BinaryIO
+
 from login_exceptions import InvalidInput
+from user import User
 
 
 def str_to_date(input_str: str) -> datetime:

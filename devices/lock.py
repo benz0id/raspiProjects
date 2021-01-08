@@ -1,8 +1,9 @@
+from threading import Thread
+from typing import List
+
 from DPs.observer import Observer
 from devices.device import Device
 from stepper import Stepper
-from typing import List
-from threading import Thread, Lock
 
 
 class Lock(Device):

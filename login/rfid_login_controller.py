@@ -1,16 +1,13 @@
-import logging
 from datetime import datetime, timedelta
+from threading import Thread
+from typing import List
 
 from DPs.observer import Observer, Subject
-from typing import List, Tuple
-
 from log_record_manager import LogManager
-from login_exceptions import InvalidInput, InvalidUserCode
 from presenters import ConsolePresenter, Presenter
 from reader import Reader
 from security_manager import SecurityManager
 from user_manager import UserManager
-from threading import Thread
 
 # The delay between logins
 LOGIN_DELAY = 30
