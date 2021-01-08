@@ -16,6 +16,7 @@ def str_to_date(input_str: str) -> datetime:
 def date_to_str(input_date: datetime) -> str:
     return input_date.strftime('%Y-%m-%d %H:%M:%S')
 
+# TODO make this use a proper gateway class
 
 class LogManager:
 
