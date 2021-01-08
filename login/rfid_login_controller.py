@@ -39,7 +39,7 @@ class RFIDLoginController(Subject):
                                          self._security_manager,
                                          self._user_log_manager)
         self._last_sign_in_id = -1
-        self._last_sign_in = datetime.now() - datetime(2000, 2, 2, 2, 2, 2)
+        self._last_sign_in = datetime(2000, 2, 2, 2, 2, 2)
         self._run_rfid_scanner = True
 
     def run_rfid_scanner(self):
@@ -69,9 +69,11 @@ class RFIDLoginController(Subject):
         reader."""
         logging.debug("Checking timed processes")
         print(self.get_cur_user_id() == self._last_sign_in_id)
-        if not (self.get_cur_user_id() == self._last_sign_in_id and
+        if not(self.get_cur_user_id() == self._last_sign_in_id and
                 datetime.now() - self._last_sign_in <
                 timedelta(0, LOGIN_DELAY)):
+            self._last_sign_in_id = self.get_cur_user_id()
+            self._last_sign_in = datetime.now()
             self._presenter.print(self.get_cur_login_str())
             self._user_log_manager.add_tap_log(self.get_cur_user_id())
 
