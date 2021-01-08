@@ -63,9 +63,9 @@ class DeviceController(Observer):
         if self._lock.is_running():
             pass
         elif self.lock_is_locked():
-            self.lock()
-        else:
             self.unlock()
+        else:
+            self.lock()
 
     def get_presenter(self):
         """Gets the presenter."""
