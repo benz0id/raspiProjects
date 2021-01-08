@@ -9,7 +9,7 @@ from .lcd_driver import lcd
 
 mutex = Lock()
 
-logging.basicConfig(filename="presenter_logs.log", level=logging.debug())
+logging.basicConfig(filename="presenter_logs.log", level=logging.DEBUG)
 
 
 class Presenter:
