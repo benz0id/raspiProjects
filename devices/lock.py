@@ -3,6 +3,7 @@ from typing import List
 
 from design_patterns.observer import Observer
 from .device import Device
+print("In the lock")
 from .stepper import Stepper
 
 
