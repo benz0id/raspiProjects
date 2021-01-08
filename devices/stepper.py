@@ -1,13 +1,9 @@
 import logging
 from datetime import datetime
-from math import ceil
-from math import pi
+from math import ceil, pi
 from time import sleep
 from typing import List
-
 import RPi.GPIO as GPIO
-
-logging.basicConfig(filename="logs.log", level=logging.DEBUG)
 
 # Use BCM GPIO references
 # instead of physical pin numbers
