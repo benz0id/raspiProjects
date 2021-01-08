@@ -25,4 +25,7 @@ LOCK_DIRECTION = 1
 # The number of stepper turns required to unlock/unlock the lock
 LOCK_TURNS = 0.5
 
+# The speed at which the stepper should rotate
+STEPPER_SPEED = 0.25
+
 

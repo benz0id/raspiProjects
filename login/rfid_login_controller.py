@@ -1,3 +1,4 @@
+import logging
 from datetime import datetime, timedelta
 from threading import Thread
 from typing import List
@@ -64,6 +65,9 @@ class RFIDLoginController(Subject):
     def timed_processes(self):
         """Runs the series of events that should occur when a user taps onto the
         reader."""
+        logging.debug("Checking timed processes", self.get_cur_login_str(),
+                      self._last_sign_in_id, self._last_sign_in, datetime.now()
+                      - self._last_sign_in, timedelta(0, LOGIN_DELAY))
         if not (self.get_cur_user_id() == self._last_sign_in_id and
                 datetime.now() - self._last_sign_in >
                 timedelta(0, LOGIN_DELAY)):

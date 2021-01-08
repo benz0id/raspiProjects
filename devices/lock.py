@@ -37,7 +37,7 @@ class Lock(Device):
     _observers: List[Observer]
 
     def __init__(self, stepper: Stepper, lock_direction: int,
-                 rotations_to_lock: float, stepper_speed: int = 1):
+                 rotations_to_lock: float, stepper_speed: int):
         """Initialises a new lock that uses <stepper> to lock, which is done in
          <lock_direction>, by turning <rotation_to_lock> times at
          <stepper_speed> turns per second"""
