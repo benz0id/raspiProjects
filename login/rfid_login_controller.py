@@ -56,13 +56,15 @@ class RFIDLoginController(Subject):
             data = self._reader.get_tag_data()
             succesful_login = self._user_manager.check_for_user(data)
             if succesful_login:
+                self.
                 self.notify()
 
     def add_new_user(self):
         """Adds a new user to the directory"""
+        self.run_timed_processes()
         self._user_manager.register_new_user()
 
-    def timed_processes(self):
+    def run_timed_processes(self):
         """Runs the series of events that should occur when a user taps onto the
         reader."""
         logging.debug("Checking timed processes", self.get_cur_login_str(),
