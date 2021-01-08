@@ -1,9 +1,9 @@
 import logging
 
 from devices.reader import Reader
-from log_record_manager import LogManager
-from login_exceptions import InvalidInput, InvalidUserCode
-from presenters import ConsolePresenter, Presenter
+from .log_record_manager import LogManager
+from .login_exceptions import InvalidInput, InvalidUserCode
+from .presenters import ConsolePresenter, Presenter
 from .security_manager import SecurityManager
 from .user import User
 from .user_manager import UserManager

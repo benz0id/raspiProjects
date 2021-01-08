@@ -3,11 +3,11 @@ from threading import Thread
 from typing import List
 
 from design_patterns.observer import Observer, Subject
-from log_record_manager import LogManager
-from presenters import ConsolePresenter, Presenter
-from reader import Reader
-from security_manager import SecurityManager
-from user_manager import UserManager
+from .log_record_manager import LogManager
+from devices.presenters import ConsolePresenter, Presenter
+from devices.reader import Reader
+from .security_manager import SecurityManager
+from .user_manager import UserManager
 
 # The delay between logins
 LOGIN_DELAY = 30
