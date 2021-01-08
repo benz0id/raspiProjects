@@ -46,6 +46,7 @@ class Lock(Device):
         self._rotations_to_unlock = rotations_to_lock
         self._lock_direction = lock_direction
         self._stepper_speed = stepper_speed
+        self._observers = []
         self._is_locked = False
         self._is_running = False
 
