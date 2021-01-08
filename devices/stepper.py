@@ -6,7 +6,6 @@ from math import pi
 from math import ceil
 from datetime import datetime
 
-
 logging.basicConfig(filename="logs.log", level=logging.DEBUG)
 
 # Use BCM GPIO references
@@ -93,7 +92,8 @@ class Stepper:
                       simple_full_step=simple_full_step)
 
     def turn_rad(self, direction: int, speed: float, radians: float,
-             simple_half_step: bool = False, simple_full_step: bool = False):
+                 simple_half_step: bool = False,
+                 simple_full_step: bool = False):
         """Turns the stepper motor <radians> degrees at a rate of <speed>
         radians per second. Turns clockwise iff <direction> is 1 else turns
         counterclockwise.
@@ -129,6 +129,7 @@ class Stepper:
         for _ in range(step_cycles):
             for step in self._seq[::direction]:
                 for i in range(self._num_pins):
+                    print("turning on pin" + str(i))
                     GPIO.output(self._step_pins[i], step[i])
                 delay(delay_time)
 
