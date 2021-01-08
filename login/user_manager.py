@@ -119,7 +119,7 @@ class UserManager:
 
             # Checking that the received input is valid
             if num_attributes - 1 != att_ind:
-                logging.info(num_attributes, att_ind)
+                logging.debug(str(num_attributes) + str(att_ind))
                 raise InvalidInput
 
             logging.info("Valid input format")
