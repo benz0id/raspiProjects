@@ -4,30 +4,30 @@ import logging
 
 
 class User:
-    __username: str
-    __id: int
-    __key: int
-    __sign_ins: List[datetime]
-    __registration_date: datetime
+    _username: str
+    _id: int
+    _key: int
+    _sign_ins: List[datetime]
+    _registration_date: datetime
 
     def __init__(self, attributes: List[str or int]):
         """ Attributes
         [0] username : str
         [1] key : int
         [2] id : int"""
-        self.__username = attributes[0]
-        self.__key = attributes[1]
-        self.__id = attributes[2]
-        self.__sign_ins = [datetime.now()]
-        self.__registration_date = datetime.now()
+        self._username = attributes[0]
+        self._key = attributes[1]
+        self._id = attributes[2]
+        self._sign_ins = [datetime.now()]
+        self._registration_date = datetime.now()
 
     def get_attributes(self) -> List[str or int]:
         """Returns a user's attributes in a consistent order"""
-        return [self.__username, self.__key, self.__id]
+        return [self._username, self._key, self._id]
 
     def add_sign_in(self):
         """Adds a date when this user signed in."""
-        self.__sign_ins.append(datetime.now())
+        self._sign_ins.append(datetime.now())
 
     @staticmethod
     def num_writable_attributes():
@@ -36,21 +36,21 @@ class User:
 
     def get_username(self) -> str:
         """Returns this user's username"""
-        return self.__username
+        return self._username
 
     def get_key(self):
         """Returns this user's key"""
-        return self.__key
+        return self._key
 
     def get_id(self):
         """Returns this users ID"""
-        return self.__id
+        return self._id
 
     def get_last_sign_in(self):
         """"Returns this users last sign in date"""
-        logging.info(self.__sign_ins)
-        return self.__sign_ins[-1]
+        logging.info(self._sign_ins)
+        return self._sign_ins[-1]
 
     def get_sign_ins(self):
         """Gets the list of times this user has signed in"""
-        return self.__sign_ins
+        return self._sign_ins

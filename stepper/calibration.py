@@ -1,5 +1,5 @@
-from CalibrationStepper import CalibrationStepper, SEQ_HALF_28BYJ_28
-from Stepper import Stepper
+from calibration_stepper import CalibrationStepper, SEQ_HALF_28BYJ_28
+from stepper import Stepper
 
 seq = SEQ_HALF_28BYJ_28
 mode = 1

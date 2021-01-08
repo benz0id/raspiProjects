@@ -1,4 +1,3 @@
-# TODO add functionality for a display
 import logging
 from abc import abstractmethod
 from logging import warning
@@ -12,6 +11,7 @@ mutex = Lock()
 
 
 class Presenter:
+    """A class capable of displaying information to the user"""
 
     @abstractmethod
     def print(self, to_show: str):
@@ -24,7 +24,8 @@ class Presenter:
         return NotImplemented
 
 
-class SimplePresenter(Presenter):
+class ConsolePresenter(Presenter):
+    """A presenter that prints to the console"""
 
     def print(self, to_show: str):
         """Displays the given text through the console"""
@@ -37,42 +38,58 @@ class SimplePresenter(Presenter):
 
 
 class LCD(Presenter):
+    """An LCD presenter
+    === Private Attributes ===
+    _lcd_regulator:
+            A thread that regulates the amount of time the LCD stays on.
+    _LCD_ON_TIME = 30
+            The amount of time the LCD spends turned on before shutting off
+    _last_turned_on: datetime
+            The last time the LCD was tuned on.
+    _lcd: lcd_driver.lcd
+            The LCD driver
+    _LINE_LENGTH = 20
+            The length of each line on the LCD
+    _NUM_LINES = 4
+            The number of lines available in the LCD
+    """
 
-    lcd_regulator: Thread
-    LCD_ON_TIME = 30
-    last_turned_on: datetime
-    lcd: lcd_driver.lcd
-    LINE_LENGTH = 20
-    NUM_LINES = 4
+    _lcd_regulator: Thread
+    _LCD_ON_TIME = 30
+    _last_turned_on: datetime
+
+    _lcd: lcd_driver.lcd
+    _LINE_LENGTH = 20
+    _NUM_LINES = 4
 
     def __init__(self):
-        self.lcd = lcd_driver.lcd()
-        self.lcd_regulator = Thread(target=self.check_lcd)
-        self.last_turned_on = datetime.now()
+        self._lcd = lcd_driver.lcd()
+        self._lcd_regulator = Thread(target=self.check_lcd)
+        self._last_turned_on = datetime.now()
 
     def check_lcd(self):
         """Check if the lcd is currently being used, if the lcd hasn't been used
         in LCD_ON_TIME seconds, then it is turned off. Checks every 30 seconds.
         """
-        while self.lcd.is_on:
+        while self._lcd.is_on:
             sleep(10)
             mutex.acquire()
-            if datetime.now() - self.last_turned_on > \
-                    timedelta(0, self.LCD_ON_TIME):
-                self.lcd.lcd_clear()
-                self.lcd.backlight(0)
+            if datetime.now() - self._last_turned_on > \
+                    timedelta(0, self._LCD_ON_TIME):
+                self._lcd.lcd_clear()
+                self._lcd.backlight(0)
             mutex.release()
 
     def begin_off_timer(self):
         """If it is not already running begins the thread that regulates the
         lcd"""
         mutex.acquire()
-        self.lcd.lcd_clear()
-        self.lcd.backlight(1)
-        self.last_turned_on = datetime.now()
-        if not self.lcd_regulator.is_alive():
-            self.lcd_regulator = Thread(target=self.check_lcd)
-            self.lcd_regulator.start()
+        self._lcd.lcd_clear()
+        self._lcd.backlight(1)
+        self._last_turned_on = datetime.now()
+        if not self._lcd_regulator.is_alive():
+            self._lcd_regulator = Thread(target=self.check_lcd)
+            self._lcd_regulator.start()
         mutex.release()
 
     def print(self, to_show: str):
@@ -82,8 +99,11 @@ class LCD(Presenter):
         logging.info("Printing to lcd")
         try:
             for i in range(len(str_list)):
-                logging.info("Printing:" + str_list[i] + " at index " + str(i))
-                self.lcd.lcd_display_string(str_list[i], i)
+                logging.info("Printing:" + str_list[i][0:20] + " at index " +
+                             str(i))
+                if len(str_list[i]) > self._NUM_LINES:
+                    logging.info("Overhang:" + str_list[i][20:])
+                self._lcd.lcd_display_string(str_list[i], i)
         except IOError:
             logging.error("Failed to print to lcd")
 
@@ -110,13 +130,13 @@ class LCD(Presenter):
             j += 1
 
         for s in to_break:
-            if len(s) > self.LINE_LENGTH:
+            if len(s) > self._LINE_LENGTH:
                 warning("lcd line length exceeded.\n Max: " +
-                        str(self.LINE_LENGTH) + "\nReached: " + str(len(s)) +
+                        str(self._LINE_LENGTH) + "\nReached: " + str(len(s)) +
                         "\nOffending line \"" + s + "\"")
-        if len(broken_strs) > self.NUM_LINES:
+        if len(broken_strs) > self._NUM_LINES:
             warning("Number of lcd lines exceeded.\n Max: " +
-                    str(self.NUM_LINES) + "\nReached: " + str(
+                    str(self._NUM_LINES) + "\nReached: " + str(
                 len(broken_strs)) +
                     "\nOffending message: \"" + to_break + "\"")
 

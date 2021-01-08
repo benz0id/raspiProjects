@@ -1,0 +1,19 @@
+from rfid_login_controller import RFIDLoginController
+from devices import stepper, misc_info, presenters, reader, device_controller, \
+    lock
+import logging
+logging.basicConfig(filename="logs.log", level=logging.DEBUG)
+
+stepper_motor = stepper.Stepper(misc_info.STEPPER_PINS, stepper.NUM_STEPS_28BYJ_28,
+                                stepper.SEQ_HALF_28BYJ_28)
+presenter = presenters.LCD()
+rfid_reader = reader.Reader()
+
+lock = lock.Lock(stepper_motor, misc_info.LOCK_DIRECTION, misc_info.LOCK_TURNS)
+
+rfid_controller = RFIDLoginController(rfid_reader, presenter)
+devices = device_controller.DeviceController(lock, rfid_reader, presenter)
+
+rfid_controller.attach(devices)
+
+rfid_controller.run_rfid_scanner()

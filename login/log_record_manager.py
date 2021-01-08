@@ -69,9 +69,9 @@ class LogManager:
         self.latest_user_id += 1
         return self.latest_user_id
 
-    def add_tap_log(self, user: User):
+    def add_tap_log(self, user_id: int):
         """Adds a log to the users tap record."""
-        uf = self.get_user_file_read(user.get_id())
+        uf = self.get_user_file_read(user_id)
         user = pickle.load(uf)
         user.add_sign_in()
         uf = self.get_user_file_write(user.get_id())

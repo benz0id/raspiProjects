@@ -28,6 +28,9 @@ SEQ_full_28BYJ_28 = [[1, 0, 0, 0],
                      [0, 0, 1, 0],
                      [0, 0, 0, 1]]
 
+# The number of steps in a 28BYJ-28 stepper motor
+NUM_STEPS_28BYJ_28 = 2048
+
 
 def delay(milliseconds: float):
     """Sleeps for <milliseconds>"""

@@ -90,7 +90,8 @@ class CalibrationStepper:
                       simple_full_step=simple_full_step)
 
     def turn_rad(self, direction: int, speed: float, radians: float,
-             simple_half_step: bool = False, simple_full_step: bool = False):
+                 simple_half_step: bool = False,
+                 simple_full_step: bool = False):
         """Turns the stepper motor <radians> degrees at a rate of <speed>
         radians per second. Turns clockwise iff <direction> is 1 else turns
         counterclockwise.

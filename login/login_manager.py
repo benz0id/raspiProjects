@@ -1,5 +1,5 @@
 from devices.reader import Reader
-from presenters import SimplePresenter, Presenter
+from presenters import ConsolePresenter, Presenter
 from security_manager import SecurityManager
 from user_manager import UserManager
 from user import User
@@ -22,7 +22,7 @@ class LoginManager:
     user_manager: UserManager
 
     def __init__(self, reader: Reader,
-                 presenter: Presenter = SimplePresenter()):
+                 presenter: Presenter = ConsolePresenter()):
         """Creates a new LoginManager with a certain presenter strategy"""
         self.security_manager = SecurityManager()
         self.reader = reader
@@ -33,7 +33,7 @@ class LoginManager:
                                         self.user_log_manager)
 
     def run_login_system(self) -> int:
-        """Runs the loginsystem system"""
+        """Runs the login system system, returns a userID if found"""
         self.user_manager.register_new_user()
         # Main loop
         # Fetch any data available from the RFID reader
@@ -47,7 +47,6 @@ class LoginManager:
 
     def add_new_user(self):
         """Adds a new user to the directory"""
-
 
     def run_login(self):
         """Runs the loginsystem system once"""
