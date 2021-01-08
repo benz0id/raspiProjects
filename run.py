@@ -1,4 +1,4 @@
-from rfid_login_controller import RFIDLoginController
+from login.rfid_login_controller import RFIDLoginController
 from devices import stepper, misc_info, presenters, reader, device_controller, \
     lock
 import logging
