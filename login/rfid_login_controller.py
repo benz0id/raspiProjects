@@ -2,7 +2,7 @@ from datetime import datetime, timedelta
 from threading import Thread
 from typing import List
 
-from DPs.observer import Observer, Subject
+from design_patterns.observer import Observer, Subject
 from log_record_manager import LogManager
 from presenters import ConsolePresenter, Presenter
 from reader import Reader

@@ -1,6 +1,6 @@
 from abc import abstractmethod
 
-from DPs.observer import Subject
+from design_patterns.observer import Subject
 
 
 class Device(Subject):

@@ -1,7 +1,7 @@
 from threading import Thread
 from typing import List
 
-from DPs.observer import Observer
+from design_patterns.observer import Observer
 from devices.device import Device
 from stepper import Stepper
 
