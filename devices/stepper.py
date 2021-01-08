@@ -11,7 +11,6 @@ logging.basicConfig(filename="logs.log", level=logging.DEBUG)
 
 # Use BCM GPIO references
 # instead of physical pin numbers
-print("Got it")
 GPIO.setmode(GPIO.BCM)
 
 # A half step sequence for the 28BYJ-28 stepper motor

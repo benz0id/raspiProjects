@@ -3,7 +3,9 @@ import logging
 from devices import device_controller, lock, misc_info, presenters, reader, \
     stepper
 from login.rfid_login_controller import RFIDLoginController
+import RPi.GPIO as GPIO
 
+GPIO.setmode(GPIO.BCM)
 logging.basicConfig(filename="logs.log", level=logging.DEBUG)
 
 stepper_motor = stepper.Stepper(misc_info.STEPPER_PINS,
