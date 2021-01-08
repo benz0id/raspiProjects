@@ -56,7 +56,7 @@ class RFIDLoginController(Subject):
             data = self._reader.get_tag_data()
             succesful_login = self._user_manager.check_for_user(data)
             if succesful_login:
-                self.
+                self.run_timed_processes()
                 self.notify()
 
     def add_new_user(self):
