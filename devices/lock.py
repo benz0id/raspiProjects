@@ -54,26 +54,34 @@ class Lock(Device):
     def lock(self):
         """Locks the lock."""
         logging.info("Locking the lock")
+        self._stepper_thread = Thread(target=self.lock_stepper)
+        self._stepper_thread.start()
+        self._is_locked = True
+
+    def lock_stepper(self):
+        """Causes the stepper to lock the lock"""
         self._is_running = True
-        self._stepper_thread = Thread(target=self._stepper.turn, args=(
+        self._stepper.turn(
             self._lock_direction,
             self._stepper_speed,
-            self._rotations_to_unlock))
-        self._stepper_thread.start()
+            self._rotations_to_unlock)
         self._is_running = False
-        self._is_locked = True
 
     def unlock(self):
         """Unlocks the lock."""
         logging.info("Unlocking the lock")
+        self._stepper_thread = Thread(target=self.unlock_stepper)
+        self._stepper_thread.start()
+        self._is_locked = False
+
+    def unlock_stepper(self):
+        """Causes the stepper to unlock the lock"""
         self._is_running = True
-        self._stepper_thread = Thread(target=self._stepper.turn, args=(
+        self._stepper.turn(
             self._lock_direction - 1,
             self._stepper_speed,
-            self._rotations_to_unlock))
-        self._stepper_thread.start()
+            self._rotations_to_unlock)
         self._is_running = False
-        self._is_locked = False
 
     def set_status(self, is_locked: bool):
         """Sets the locks state."""

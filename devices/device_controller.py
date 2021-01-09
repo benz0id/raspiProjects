@@ -77,9 +77,11 @@ class DeviceController(Observer):
         if self._lock.is_running() or self._busy:
             pass
         elif self.lock_is_locked():
+            self._busy = True
             self.unlock()
         else:
             self.lock()
+            self._busy = True
 
     def add_lock_button(self, button_pin: int):
         """Add as a switch that regulates the lock. Opens lock when the button
