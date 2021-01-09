@@ -66,13 +66,11 @@ class Lock(Device):
         """Unlocks the lock."""
         logging.info("Unlocking the lock")
         self._is_running = True
-        print("starting")
         self._stepper_thread = Thread(self._stepper.turn(
                                       self._lock_direction - 1,
                                       self._stepper_speed,
                                       self._rotations_to_unlock))
         self._stepper_thread.start()
-        print("stopping")
         self._is_running = False
         self._is_locked = False
 
