@@ -6,6 +6,15 @@ import logging
 GPIO.setmode(GPIO.BCM)
 
 
+def triple_blink(led: Led):
+    """Blinks <led> three times if it isn't running."""
+    if not led.is_running():
+        thread = Thread(target=led.blink(3, 0.3, 0.3))
+        thread.start()
+    else:
+        logging.debug("Could not flash LED, was running")
+
+
 class LedManager:
     _red_led: Led
     _green_led: Led
@@ -18,21 +27,11 @@ class LedManager:
     def unlocked_display(self):
         """Blinks the green led three times"""
         logging.info("Flashing Green LED")
-        self.triple_blink(self._green_led)
+        triple_blink(self._green_led)
 
     def locked_display(self):
         """Blinks the red led three times"""
-        print(self._green_led._pin)
-        print(self._red_led._pin)
         logging.info("Flashing Red LED")
-        self.triple_blink(self._red_led)
-
-    def triple_blink(self, led: Led):
-        """Blinks <led> three times if it isn't running."""
-        if not led.is_running():
-            thread = Thread(target=self._red_led.blink(3, 0.3, 0.3))
-            thread.start()
-        else:
-            logging.debug("Could not flash LED, was running")
+        triple_blink(self._red_led)
 
 
