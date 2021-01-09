@@ -27,21 +27,16 @@ class DeviceController(Observer):
             Devices that monitor activity.
     _led_manager:
             A manager that operates attached LEDS.
-    _busy:
-            Whether this controller has one or more threads running that could
-            interfere with new threads.
     """
     _lock: Lock
     _reader: Reader
     _presenter: Presenter
     _security_devices: List[SecurityDevice]
     _led_manager: LedManager
-    _busy: bool
 
     def __init__(self, lock: Lock, reader: Reader, presenter: Presenter,
                  led_manager: LedManager):
         """Initialises a new manager."""
-        self._busy = False
         self._lock = lock
         self._reader = reader
         self._presenter = presenter
@@ -74,14 +69,12 @@ class DeviceController(Observer):
 
     def switch_lock_state(self, callable=None):
         """Switches the lock to its other state."""
-        if self._lock.is_running() or self._busy:
+        if self._lock.is_running():
             pass
         elif self.lock_is_locked():
-            self._busy = True
             self.unlock()
         else:
             self.lock()
-            self._busy = True
 
     def add_lock_button(self, button_pin: int):
         """Add as a switch that regulates the lock. Opens lock when the button
