@@ -17,8 +17,8 @@ class LedManager:
 
     def unlocked_display(self):
         """Blinks the green led three times"""
-        self.triple_blink(self._green_led)
         logging.info("Flashing Green LED")
+        self.triple_blink(self._green_led)
 
     def locked_display(self):
         """Blinks the red led three times"""
@@ -30,5 +30,7 @@ class LedManager:
         if not led.is_running():
             thread = Thread(target=self._red_led.blink(3, 0.3, 0.3))
             thread.start()
+        else:
+            logging.debug("Could not flash LED, was running")
 
 
