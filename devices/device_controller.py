@@ -6,6 +6,7 @@ from .presenters import Presenter
 from .reader import Reader
 from .security_device import SecurityDevice
 from .led_manager import LedManager
+import RPi.GPIO as GPIO
 
 
 class DeviceController(Observer):
@@ -41,6 +42,13 @@ class DeviceController(Observer):
         self._presenter = presenter
         self._security_devices = []
         self._led_manager = led_manager
+
+    def add_lock_button(self, button_pin: int):
+        """Add as a switch that regulates the lock. Opens lock when the button
+        rises."""
+        GPIO.setup(button_pin, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
+        GPIO.add_event_detect(button_pin, GPIO.RISING,
+                              callback=self.switch_lock_state())
 
     def add_security_device(self, device: SecurityDevice):
         """Adds a security device to the list of security devices"""

@@ -6,7 +6,7 @@ from devices.device_controller import DeviceController
 from devices.lock import Lock
 from login.rfid_login_controller import RFIDLoginController
 from devices.misc_info import GREEN_LED_PIN, LOCK_DIRECTION, LOCK_TURNS, \
-    RED_LED_PIN, STEPPER_PINS, STEPPER_SPEED
+    RED_LED_PIN, STEPPER_PINS, STEPPER_SPEED, UNLOCK_BUTTON
 from devices.presenters import LCD
 from devices.reader import Reader
 from devices.stepper import NUM_STEPS_28BYJ_28, SEQ_HALF_28BYJ_28, Stepper
@@ -26,6 +26,7 @@ led_m = LedManager(RED_LED_PIN, GREEN_LED_PIN)
 
 rfid_controller = RFIDLoginController(rfid_reader, presenter)
 devices = DeviceController(lock, rfid_reader, presenter, led_m)
+devices.add_lock_button(UNLOCK_BUTTON)
 
 rfid_controller.attach(devices)
 
