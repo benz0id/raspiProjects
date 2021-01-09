@@ -43,13 +43,6 @@ class DeviceController(Observer):
         self._security_devices = []
         self._led_manager = led_manager
 
-    def add_lock_button(self, button_pin: int):
-        """Add as a switch that regulates the lock. Opens lock when the button
-        rises."""
-        GPIO.setup(button_pin, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
-        GPIO.add_event_detect(button_pin, GPIO.RISING,
-                              callback=self.switch_lock_state())
-
     def add_security_device(self, device: SecurityDevice):
         """Adds a security device to the list of security devices"""
         self._security_devices.append(device)
@@ -82,6 +75,13 @@ class DeviceController(Observer):
             self.unlock()
         else:
             self.lock()
+
+    def add_lock_button(self, button_pin: int):
+        """Add as a switch that regulates the lock. Opens lock when the button
+        rises."""
+        GPIO.setup(button_pin, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
+        GPIO.add_event_detect(button_pin, GPIO.RISING,
+                              callback=self.switch_lock_state)
 
     def get_presenter(self):
         """Gets the presenter."""

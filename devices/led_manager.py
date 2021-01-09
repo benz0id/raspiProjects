@@ -9,7 +9,7 @@ GPIO.setmode(GPIO.BCM)
 def triple_blink(led: Led):
     """Blinks <led> three times if it isn't running."""
     if not led.is_running():
-        thread = Thread(target=led.blink(3, 0.3, 0.3))
+        thread = Thread(target=led.blink, args=(3, 0.3, 0.3))
         thread.start()
     else:
         logging.debug("Could not flash LED, was running")
