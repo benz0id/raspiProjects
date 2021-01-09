@@ -25,7 +25,7 @@ lock = Lock(stepper_motor, LOCK_DIRECTION, LOCK_TURNS, STEPPER_SPEED)
 led_m = LedManager(RED_LED_PIN, GREEN_LED_PIN)
 
 rfid_controller = RFIDLoginController(rfid_reader, presenter)
-devices = DeviceController(lock, rfid_reader, presenter)
+devices = DeviceController(lock, rfid_reader, presenter, led_m)
 
 rfid_controller.attach(devices)
 
