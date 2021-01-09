@@ -1,6 +1,6 @@
 import RPi.GPIO as GPIO
 from .led import Led
-from threading import
+from threading import Thread
 import logging
 
 GPIO.setmode(GPIO.BCM)
