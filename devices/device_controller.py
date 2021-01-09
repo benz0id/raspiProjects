@@ -5,6 +5,7 @@ from .lock import Lock
 from .presenters import Presenter
 from .reader import Reader
 from .security_device import SecurityDevice
+from .led_manager import LedManager
 
 
 class DeviceController(Observer):
@@ -23,18 +24,23 @@ class DeviceController(Observer):
             A presenter used to show information to the user
     _security_devices:
             Devices that monitor activity.
+    _led_manager:
+            A manager that operates attached LEDS.
     """
     _lock: Lock
     _reader: Reader
     _presenter: Presenter
     _security_devices: List[SecurityDevice]
+    _led_manager: LedManager
 
-    def __init__(self, lock: Lock, reader: Reader, presenter: Presenter):
+    def __init__(self, lock: Lock, reader: Reader, presenter: Presenter,
+                 led_manager: LedManager):
         """Initialises a new manager."""
         self._lock = lock
         self._reader = reader
         self._presenter = presenter
         self._security_devices = []
+        self._led_manager = led_manager
 
     def add_security_device(self, device: SecurityDevice):
         """Adds a security device to the list of security devices"""
@@ -44,11 +50,13 @@ class DeviceController(Observer):
         """Locks the lock"""
         if not self._lock.is_running():
             self._lock.lock()
+            self._led_manager.lock_locked_display()
 
     def unlock(self):
         """Unlocks the lock"""
         if not self._lock.is_running():
             self._lock.unlock()
+            self._led_manager.lock_unlocked_display()
 
     def lock_is_locked(self) -> bool:
         """Gets the state of the lock, locked iff True."""

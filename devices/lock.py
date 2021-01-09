@@ -1,6 +1,8 @@
 from threading import Thread
 from typing import List
 
+import logging
+
 from design_patterns.observer import Observer
 from .device import Device
 from .stepper import Stepper
@@ -51,6 +53,7 @@ class Lock(Device):
 
     def lock(self):
         """Locks the lock."""
+        logging.info("Locking the lock")
         self._is_running = True
         self._stepper_thread = Thread(self._stepper.turn(self._lock_direction,
                                                          self._stepper_speed,
@@ -58,10 +61,10 @@ class Lock(Device):
         self._stepper_thread.start()
         self._is_running = False
         self._is_locked = True
-        self.notify()
 
     def unlock(self):
         """Unlocks the lock."""
+        logging.info("Unlocking the lock")
         self._is_running = True
         print("starting")
         self._stepper_thread = Thread(self._stepper.turn(
@@ -72,15 +75,10 @@ class Lock(Device):
         print("stopping")
         self._is_running = False
         self._is_locked = False
-        self.notify()
-
-
-
 
     def set_status(self, is_locked: bool):
         """Sets the locks state."""
         self._is_locked = is_locked
-        self.notify()
 
     def is_locked(self) -> bool:
         """Returns whether the lock is locked. Locked iff true"""
@@ -89,16 +87,6 @@ class Lock(Device):
     def is_running(self) -> bool:
         """Returns whether this lock is running."""
         return self._is_running
-
-    def attach(self, observer: Observer) -> None:
-        self._observers.append(observer)
-
-    def detach(self, observer: Observer) -> None:
-        self._observers.remove(observer)
-
-    def notify(self) -> None:
-        for observer in self._observers:
-            observer.update(self)
 
 
 
