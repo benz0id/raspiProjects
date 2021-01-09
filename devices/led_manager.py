@@ -22,8 +22,10 @@ class LedManager:
 
     def locked_display(self):
         """Blinks the red led three times"""
-        self.triple_blink(self._red_led)
+        print(self._green_led._pin)
+        print(self._red_led._pin)
         logging.info("Flashing Red LED")
+        self.triple_blink(self._red_led)
 
     def triple_blink(self, led: Led):
         """Blinks <led> three times if it isn't running."""
