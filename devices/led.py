@@ -1,6 +1,7 @@
 from .device import Device
 import RPi.GPIO as GPIO
 from time import sleep
+import logging
 
 GPIO.setmode(GPIO.BCM)
 
@@ -23,6 +24,7 @@ class Led(Device):
         """Blinks the led <num_blinks> times, with it being on for <on_time> and
         off for <off_time>."""
         self._running = True
+        logging.info("Flashing LED at pin:" + str(self._pin))
         for _ in range(num_blinks):
             GPIO.output(self._pin, 1)
             sleep(on_time)

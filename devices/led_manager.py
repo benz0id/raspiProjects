@@ -1,6 +1,7 @@
 import RPi.GPIO as GPIO
 from .led import Led
-from threading import Thread
+from threading import
+import logging
 
 GPIO.setmode(GPIO.BCM)
 
@@ -14,13 +15,15 @@ class LedManager:
         self._red_led = Led(red_led_pin)
         self._green_led = Led(green_led_pin)
 
-    def lock_unlocked_display(self):
+    def unlocked_display(self):
         """Blinks the green led three times"""
         self.triple_blink(self._green_led)
+        logging.info("Flashing Green LED")
 
-    def lock_locked_display(self):
+    def locked_display(self):
         """Blinks the red led three times"""
         self.triple_blink(self._red_led)
+        logging.info("Flashing Red LED")
 
     def triple_blink(self, led: Led):
         """Blinks <led> three times if it isn't running."""

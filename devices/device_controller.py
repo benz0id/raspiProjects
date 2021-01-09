@@ -49,14 +49,14 @@ class DeviceController(Observer):
     def lock(self):
         """Locks the lock"""
         if not self._lock.is_running():
+            self._led_manager.locked_display()
             self._lock.lock()
-            self._led_manager.lock_locked_display()
 
     def unlock(self):
         """Unlocks the lock"""
         if not self._lock.is_running():
+            self._led_manager.unlocked_display()
             self._lock.unlock()
-            self._led_manager.lock_unlocked_display()
 
     def lock_is_locked(self) -> bool:
         """Gets the state of the lock, locked iff True."""
