@@ -67,7 +67,7 @@ class DeviceController(Observer):
         """Sets the state of the lock."""
         self.set_lock_state(state)
 
-    def switch_lock_state(self):
+    def switch_lock_state(self, callable=None):
         """Switches the lock to its other state."""
         if self._lock.is_running():
             pass
