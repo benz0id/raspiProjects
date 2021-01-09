@@ -28,7 +28,7 @@ LOCK_TURNS = 0.5
 # The speed at which the stepper should rotate
 STEPPER_SPEED = 0.25
 
-RED_LED_PIN = 23
-GREEN_LED_PIN = 24
+RED_LED_PIN = 24
+GREEN_LED_PIN = 23
 
 
