@@ -32,3 +32,5 @@ devices.add_lock_button(UNLOCK_BUTTON)
 rfid_controller.attach(devices)
 
 rfid_controller.run_rfid_scanner()
+
+logging.debug("Code Finished")
