@@ -81,7 +81,12 @@ class DeviceController(Observer):
         rises."""
         GPIO.setup(button_pin, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
         GPIO.add_event_detect(button_pin, GPIO.RISING,
-                              callback=self.switch_lock_state)
+                              callback=self.poll_lock_button())
+
+
+    def poll_lock_button(self, button_pin):
+        """Constantly polls a button, switches the lock state if pressed"""
+        print("ppga")
 
     def get_presenter(self):
         """Gets the presenter."""
