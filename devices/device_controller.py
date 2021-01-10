@@ -81,7 +81,7 @@ class DeviceController(Observer):
         rises."""
         GPIO.setup(button_pin, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
         GPIO.add_event_detect(button_pin, GPIO.RISING,
-                              callback=self.poll_lock_button())
+                              callback=self.poll_lock_button)
 
 
     def poll_lock_button(self, button_pin):
