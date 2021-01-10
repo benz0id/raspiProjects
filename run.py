@@ -13,6 +13,7 @@ from devices.stepper import NUM_STEPS_28BYJ_28, SEQ_HALF_28BYJ_28, Stepper
 from devices.led_manager import LedManager
 
 GPIO.cleanup()
+raise Exception("lol")
 GPIO.setmode(GPIO.BCM)
 logging.basicConfig(filename="logs.log", level=logging.DEBUG)
 
