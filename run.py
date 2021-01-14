@@ -28,7 +28,7 @@ led_m = LedManager(RED_LED_PIN, GREEN_LED_PIN)
 
 rfid_controller = RFIDLoginController(rfid_reader, presenter)
 devices = DeviceController(lock, rfid_reader, presenter, led_m)
-button_thread = Thread(target=devices.poll_lock_button, args=(LOCK_BUTTON))
+button_thread = Thread(target=devices.poll_lock_button, args=[LOCK_BUTTON])
 button_thread.start()
 
 rfid_controller.attach(devices)
