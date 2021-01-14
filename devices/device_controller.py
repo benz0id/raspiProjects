@@ -7,6 +7,7 @@ from .reader import Reader
 from .security_device import SecurityDevice
 from .led_manager import LedManager
 import RPi.GPIO as GPIO
+from time import sleep
 
 
 class DeviceController(Observer):
@@ -78,15 +79,21 @@ class DeviceController(Observer):
 
     def add_lock_button(self, button_pin: int):
         """Add as a switch that regulates the lock. Opens lock when the button
-        rises."""
+        rises.
+        ###### Interferes with other processes ######"""
         GPIO.setup(button_pin, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
         GPIO.add_event_detect(button_pin, GPIO.RISING,
                               callback=self.poll_lock_button)
 
-
     def poll_lock_button(self, button_pin):
         """Constantly polls a button, switches the lock state if pressed"""
-        print("ppga")
+        prev_input = 0
+        while True:
+            input = GPIO.input(button_pin)
+            if (not prev_input) and input:
+                self.switch_lock_state()
+            prev_input = input
+            sleep(0.05)
 
     def get_presenter(self):
         """Gets the presenter."""
