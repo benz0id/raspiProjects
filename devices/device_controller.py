@@ -88,6 +88,7 @@ class DeviceController(Observer):
     def poll_lock_button(self, button_pin):
         """Constantly polls a button, switches the lock state if pressed"""
         prev_input = 0
+        GPIO.setup(button_pin, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
         while True:
             input = GPIO.input(button_pin)
             if (not prev_input) and input:
