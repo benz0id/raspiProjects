@@ -3,7 +3,7 @@ from typing import List
 
 import logging
 
-from design_patterns.observer import Observer
+from observer import Observer
 from .device import Device
 from .stepper import Stepper
 
