@@ -1,12 +1,12 @@
 import logging
 
-from Presenters import Presenter
+from presenters import Presenter
 from datetime import datetime
 import RPi.GPIO as GPIO
-from Reader import Reader
-from SecurityManager import SecurityManager
-from User import User
-from LogManager import LogManager
+from reader import Reader
+from security_manager import SecurityManager
+from user import User
+from log_manager import LogManager
 
 
 class InvalidInput(Exception):
