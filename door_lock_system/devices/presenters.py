@@ -24,7 +24,7 @@ class Presenter:
         return NotImplemented
 
 
-class SimplePresenter(Presenter):
+class ConsolePresenter(Presenter):
 
     def print(self, to_show: str):
         """Displays the given text through the console"""
