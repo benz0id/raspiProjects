@@ -43,6 +43,43 @@ LINE_LENGTH = 20
 NUM_LINES = 4
 
 
+def to_lines_list(to_break: str) -> List[str]:
+    """Breaks a <to_break> into multiple strings based upon the placement of
+    newline characters"""
+    broken_strs = [""]
+    i = 0
+    j = 0
+    k = 0
+
+    while j < len(to_break):
+        if to_break[j] == "\n":
+            i += 1
+            broken_strs.append("")
+            k = 0
+            j += 1
+        elif k >= LINE_LENGTH:
+            i += 1
+            k = 0
+            broken_strs.append("")
+        else:
+            broken_strs[i] += to_break[j]
+            j += 1
+            k += 1
+
+    for s in to_break:
+        if len(s) > LINE_LENGTH:
+            logging.warning("LCD line length exceeded.\n Max: " +
+                            str(LINE_LENGTH) + "\nReached: " + str(len(s)) +
+                            "\nOffending line \"" + s + "\"")
+    if len(broken_strs) > NUM_LINES:
+        logging.warning("Number of LCD lines exceeded.\n Max: " +
+                        str(NUM_LINES) + "\nReached: " + str(
+            len(broken_strs)) +
+                        "\nOffending message: \"" + to_break + "\"")
+
+    return broken_strs
+
+
 class LCD(Presenter):
     lcd_regulator: Thread
     last_turned_on: datetime
@@ -80,7 +117,7 @@ class LCD(Presenter):
 
     def print(self, to_show: str):
         """Shows the given string on the the LCD"""
-        str_list = self.to_lines_list(to_show)
+        str_list = to_lines_list(to_show)
         self.begin_off_timer()
         logging.info("Printing to LCD")
         try:
@@ -95,40 +132,3 @@ class LCD(Presenter):
         self.print(to_show)
         # TODO this should be fixed using a keyboard input source
         return input()
-
-    def to_lines_list(self, to_break: str) -> List[str]:
-        """Breaks a <to_break> into multiple strings based upon the placement of
-        newline characters"""
-        broken_strs = [""]
-        i = 0
-        j = 0
-        k = 0
-
-        while j < len(to_break):
-            if to_break[j] == "\n":
-                i += 1
-                broken_strs.append("")
-                k = 0
-                j += 1
-            elif k >= 19:
-                i += 1
-                k = 0
-                broken_strs.append("")
-
-            else:
-                broken_strs[i] += to_break[j]
-                j += 1
-                k += 1
-
-        for s in to_break:
-            if len(s) > LINE_LENGTH:
-                logging.warning("LCD line length exceeded.\n Max: " +
-                                str(LINE_LENGTH) + "\nReached: " + str(len(s)) +
-                                "\nOffending line \"" + s + "\"")
-        if len(broken_strs) > NUM_LINES:
-            logging.warning("Number of LCD lines exceeded.\n Max: " +
-                            str(NUM_LINES) + "\nReached: " + str(
-                len(broken_strs)) +
-                            "\nOffending message: \"" + to_break + "\"")
-
-        return broken_strs
