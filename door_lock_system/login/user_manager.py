@@ -1,10 +1,10 @@
 import logging
 from datetime import datetime
 
-from ..devices.reader import Reader
+from devices.reader import Reader
 from .log_record_manager import LogManager
 from .login_exceptions import InvalidInput, InvalidUserCode
-from ..devices.presenters import Presenter
+from devices.presenters import Presenter
 from .security_manager import SecurityManager
 from .user import User
 
