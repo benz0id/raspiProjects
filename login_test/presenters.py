@@ -102,11 +102,17 @@ class LCD(Presenter):
         k = 0
 
         while j < len(to_break):
-            if to_break[j] == "\n" or k >= self.LINE_LENGTH:
+            if to_break[j] == "\n":
                 i += 1
-                logging.info("adding a new line: " + str(i))
                 broken_strs.append("")
+                logging.info("adding a new line: " + str(i))
                 k = 0
+                j += 1
+            elif k >= 20:
+                i += 1
+                k = 0
+                broken_strs.append("")
+                logging.info("adding a new line: " + str(i))
             else:
                 broken_strs[i] += to_break[j]
                 j += 1
