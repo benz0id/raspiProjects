@@ -9,6 +9,7 @@ class User:
     _key: int
     _sign_ins: List[datetime]
     _registration_date: datetime
+    _cleared_for_access: bool
 
     def __init__(self, attributes: List[str or int]):
         """ Attributes
@@ -20,6 +21,7 @@ class User:
         self._id = attributes[2]
         self._sign_ins = [datetime.now()]
         self._registration_date = datetime.now()
+        self._cleared_for_access = True
 
     def get_attributes(self) -> List[str or int]:
         """Returns a user's attributes in a consistent order"""
@@ -28,6 +30,13 @@ class User:
     def add_sign_in(self):
         """Adds a date when this user signed in."""
         self._sign_ins.append(datetime.now())
+
+    def has_access(self) -> bool:
+        """Returns whether this user is cleared for access."""
+
+    def restrict_access(self):
+        """Marks this user as not cleared for access."""
+        self._cleared_for_access = False
 
     @staticmethod
     def num_writable_attributes():

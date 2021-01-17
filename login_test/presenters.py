@@ -99,23 +99,26 @@ class LCD(Presenter):
         broken_strs = [""]
         i = 0
         j = 0
+        k = 0
 
         while j < len(to_break):
-            if to_break[j] == "\n":
+            if to_break[j] == "\n" or k >= self.LINE_LENGTH:
                 i += 1
-                logging.info("adding a new index" + str(i))
+                logging.info("adding a new line: " + str(i))
                 broken_strs.append("")
+                k = 0
             else:
                 broken_strs[i] += to_break[j]
-            j += 1
+                j += 1
+                k += 1
 
         for s in to_break:
             if len(s) > self.LINE_LENGTH:
-                warning("LCD line length exceeded.\n Max: " +
+                logging.warning("LCD line length exceeded.\n Max: " +
                         str(self.LINE_LENGTH) + "\nReached: " + str(len(s)) +
                         "\nOffending line \"" + s + "\"")
         if len(broken_strs) > self.NUM_LINES:
-            warning("Number of LCD lines exceeded.\n Max: " +
+            logging.warning("Number of LCD lines exceeded.\n Max: " +
                     str(self.NUM_LINES) + "\nReached: " + str(
                 len(broken_strs)) +
                     "\nOffending message: \"" + to_break + "\"")

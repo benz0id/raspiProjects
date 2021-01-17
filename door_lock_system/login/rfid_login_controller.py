@@ -44,7 +44,7 @@ class RFIDLoginController(Subject):
     def run_rfid_scanner(self):
         """Runs the RFID scanner while self._run_rfid_scanner in a separate
         thread"""
-        rfid_thread = Thread(target=self.run_login_system())
+        rfid_thread = Thread(target=self.run_login_system)
         rfid_thread.start()
 
     def run_login_system(self):
@@ -54,9 +54,12 @@ class RFIDLoginController(Subject):
             # Fetch any data available from the RFID reader
             data = self._reader.get_tag_data()
             succesful_login = self._user_manager.check_for_user(data)
-            if succesful_login:
+            if succesful_login and self._user_manager.logged_in_cleared():
                 self.run_timed_processes()
                 self.notify()
+            else:
+                self._presenter.print("User not cleared for access."
+                                      " Contact the admin")
 
     def add_new_user(self):
         """Adds a new user to the directory"""

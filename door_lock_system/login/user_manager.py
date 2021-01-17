@@ -167,4 +167,8 @@ class UserManager:
                 login_str += tab + sign_ins[i].strftime("%b %d %Y %I:%M %p") + \
                              "\n"
 
+    def logged_in_cleared(self):
+        """Returns whether the logged in user is cleared for access"""
+        return self._recent_user.has_access()
+
         return login_str
