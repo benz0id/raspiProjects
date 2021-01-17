@@ -110,7 +110,7 @@ class LCD(Presenter):
                 broken_strs.append("")
                 k = 0
                 j += 1
-            elif k >= LINE_LENGTH:
+            elif k >= LINE_LENGTH - 1:
                 i += 1
                 k = 0
                 broken_strs.append("")
