@@ -114,6 +114,7 @@ class LCD(Presenter):
                 i += 1
                 k = 0
                 broken_strs.append("")
+
             else:
                 broken_strs[i] += to_break[j]
                 j += 1
