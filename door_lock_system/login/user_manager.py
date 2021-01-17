@@ -171,4 +171,3 @@ class UserManager:
         """Returns whether the logged in user is cleared for access"""
         return self._recent_user.has_access()
 
-        return login_str

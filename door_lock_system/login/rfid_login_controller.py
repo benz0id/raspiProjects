@@ -57,7 +57,8 @@ class RFIDLoginController(Subject):
             if succesful_login and self._user_manager.logged_in_cleared():
                 self.run_timed_processes()
                 self.notify()
-            else:
+            elif self._user_manager.logged_in_cleared():
+                self.run_timed_processes()
                 self._presenter.print("User not cleared for access."
                                       " Contact the admin")
 
@@ -72,8 +73,10 @@ class RFIDLoginController(Subject):
         if not(self.get_cur_user_id() == self._last_sign_in_id and
                 datetime.now() - self._last_sign_in <
                 timedelta(0, LOGIN_DELAY)):
+            # Update sign in id
             self._last_sign_in_id = self.get_cur_user_id()
             self._last_sign_in = datetime.now()
+            # Display the login string
             self._presenter.print(self.get_cur_login_str())
             self._user_log_manager.add_tap_log(self.get_cur_user_id())
 
