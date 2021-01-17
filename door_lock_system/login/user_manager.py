@@ -152,3 +152,19 @@ class UserManager:
     def get_cur_user_id(self) -> int:
         """Gets the most recently logged in user's id"""
         return self._recent_user.get_id()
+
+    def view_recent_logins(self, num_logins: int) -> str:
+        """Returns a string containing information regarding the last
+        <num_logins> for each user in the system."""
+        login_str = ""
+        tab = "    "
+        for user in self._user_log_manager.get_all_users():
+            login_str += user.get_username() + ":\n"
+
+            sign_ins = user.get_sign_ins()
+            i = len(sign_ins) - 1
+            while num_logins > i >= 0:
+                i -= 1
+                login_str += tab + str(sign_ins[i])
+
+        return login_str
