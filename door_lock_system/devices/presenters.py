@@ -5,7 +5,7 @@ from logging import warning
 from threading import Thread, Lock
 from datetime import datetime, timedelta
 from time import sleep
-import lcd_driver
+from .lcd_driver import lcd
 from typing import List
 
 mutex = Lock()
@@ -83,10 +83,10 @@ def to_lines_list(to_break: str) -> List[str]:
 class LCD(Presenter):
     lcd_regulator: Thread
     last_turned_on: datetime
-    lcd: lcd_driver.lcd
+    lcd: lcd
 
     def __init__(self):
-        self.lcd = lcd_driver.lcd()
+        self.lcd = lcd()
         self.lcd_regulator = Thread(target=self.check_lcd)
         self.last_turned_on = datetime.now()
 
