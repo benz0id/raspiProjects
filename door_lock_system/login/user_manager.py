@@ -165,6 +165,6 @@ class UserManager:
             i = len(sign_ins) - 1
             while num_logins > i >= 0:
                 i -= 1
-                login_str += tab + str(sign_ins[i])
+                login_str += tab + str(sign_ins[i]) + "\n"
 
         return login_str
