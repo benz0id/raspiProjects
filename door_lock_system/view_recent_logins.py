@@ -9,10 +9,17 @@ presenter = ConsolePresenter()
 
 um = UserManager(presenter, Reader(), SecurityManager(), LogManager())
 
-num_logins = int(presenter.input("Enter the number of past "
-                                 "logins you would like to see."))
+num_logins = presenter.input("Enter the number of past "
+                                 "logins you would like to see.")
 
-presenter.print(um.view_recent_logins(num_logins))
+while not num_logins.isnumeric():
+
+    presenter.print("Invalid input. moron.")
+
+    num_logins = presenter.input("Enter the number of past "
+                                 "logins you would like to see.")
+
+presenter.print(um.view_recent_logins(int(num_logins)))
 
 GPIO.cleanup()
 
