@@ -162,7 +162,7 @@ class UserManager:
             login_str += user.get_username() + ":\n"
             sign_ins = user.get_sign_ins()
             i = len(sign_ins) - 1
-            while i > len(sign_ins) - num_logins and i >= 0:
+            while i > len(sign_ins) - num_logins - 1 and i >= 0:
                 i -= 1
                 login_str += tab + sign_ins[i].strftime("%b %d %Y %I:%M %p") + \
                              "\n"
