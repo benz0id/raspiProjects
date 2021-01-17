@@ -160,11 +160,11 @@ class UserManager:
         tab = "    "
         for user in self._user_log_manager.get_all_users():
             login_str += user.get_username() + ":\n"
-
             sign_ins = user.get_sign_ins()
             i = len(sign_ins) - 1
-            while num_logins > i >= 0:
+            while len(sign_ins) - num_logins > i >= 0:
                 i -= 1
-                login_str += tab + str(sign_ins[i]) + "\n"
+                login_str += tab + sign_ins[i].strftime("%b %d %Y %I:%M %p") + \
+                             "\n"
 
         return login_str
