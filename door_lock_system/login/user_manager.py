@@ -159,7 +159,7 @@ class UserManager:
         login_str = ""
         tab = "    "
         for user in self._user_log_manager.get_all_users():
-            login_str += user.get_username() + ":\n"
+            login_str += str(user.get_id()) + " " + user.get_username() + ":\n"
             sign_ins = user.get_sign_ins()
             i = len(sign_ins) - 1
             while i > len(sign_ins) - num_logins - 1 and i >= 0:

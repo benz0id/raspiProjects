@@ -33,6 +33,7 @@ class User:
 
     def has_access(self) -> bool:
         """Returns whether this user is cleared for access."""
+        return self._cleared_for_access
 
     def restrict_access(self):
         """Marks this user as not cleared for access."""
