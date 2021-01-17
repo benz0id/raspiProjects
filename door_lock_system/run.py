@@ -1,7 +1,4 @@
 import logging
-import devices
-import design_patterns
-import login
 
 import RPi.GPIO as GPIO
 

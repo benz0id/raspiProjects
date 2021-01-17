@@ -2,10 +2,10 @@ from datetime import datetime, timedelta
 from threading import Thread
 from typing import List
 
-from observer import Observer, Subject
+from ..design_patterns.observer import Observer, Subject
 from .log_record_manager import LogManager
-from door_lock_system.devices import ConsolePresenter, Presenter
-from door_lock_system.devices import Reader
+from ..devices.presenters import ConsolePresenter, Presenter
+from ..devices.reader import Reader
 from .security_manager import SecurityManager
 from .user_manager import UserManager
 

@@ -1,8 +1,8 @@
-from door_lock_system.login import UserManager
-from door_lock_system.devices import ConsolePresenter
-from door_lock_system.devices import Reader
-from door_lock_system.login import SecurityManager
-from door_lock_system.login import LogManager
+from login.user_manager import UserManager
+from devices.presenters import ConsolePresenter
+from devices.reader import Reader
+from login.security_manager import SecurityManager
+from login.log_record_manager import LogManager
 import RPi.GPIO as GPIO
 
 um = UserManager(ConsolePresenter(), Reader(), SecurityManager(), LogManager())
