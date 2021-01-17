@@ -35,7 +35,7 @@ def get_login_str(user: User) -> str:
                                 " hrs ago"
 
     login_str += "Welcome back " + user.get_username() + "\n" + \
-                 "Your last login was at:\n" + \
+                 "Your last login was:\n" + \
                  str(last_login.strftime("%b %d %Y %I:%M%p")) + "\n" + \
                  time_since_last_login_str
 
