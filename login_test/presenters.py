@@ -105,14 +105,12 @@ class LCD(Presenter):
             if to_break[j] == "\n":
                 i += 1
                 broken_strs.append("")
-                logging.info("adding a new line: " + str(i))
                 k = 0
                 j += 1
             elif k >= 20:
                 i += 1
                 k = 0
                 broken_strs.append("")
-                logging.info("adding a new line: " + str(i))
             else:
                 broken_strs[i] += to_break[j]
                 j += 1
