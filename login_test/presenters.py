@@ -36,14 +36,17 @@ class SimplePresenter(Presenter):
         return input(to_show)
 
 
-class LCD(Presenter):
+# Characteristics of the LCD
 
+LCD_ON_TIME = 30
+LINE_LENGTH = 20
+NUM_LINES = 4
+
+
+class LCD(Presenter):
     lcd_regulator: Thread
-    LCD_ON_TIME = 30
     last_turned_on: datetime
     lcd: lcd_driver.lcd
-    LINE_LENGTH = 20
-    NUM_LINES = 4
 
     def __init__(self):
         self.lcd = lcd_driver.lcd()
@@ -58,7 +61,7 @@ class LCD(Presenter):
             sleep(10)
             mutex.acquire()
             if datetime.now() - self.last_turned_on > \
-                    timedelta(0, self.LCD_ON_TIME):
+                    timedelta(0, LCD_ON_TIME):
                 self.lcd.lcd_clear()
                 self.lcd.backlight(0)
             mutex.release()
@@ -107,7 +110,7 @@ class LCD(Presenter):
                 broken_strs.append("")
                 k = 0
                 j += 1
-            elif k >= 20:
+            elif k >= LINE_LENGTH:
                 i += 1
                 k = 0
                 broken_strs.append("")
@@ -117,14 +120,14 @@ class LCD(Presenter):
                 k += 1
 
         for s in to_break:
-            if len(s) > self.LINE_LENGTH:
+            if len(s) > LINE_LENGTH:
                 logging.warning("LCD line length exceeded.\n Max: " +
-                        str(self.LINE_LENGTH) + "\nReached: " + str(len(s)) +
-                        "\nOffending line \"" + s + "\"")
-        if len(broken_strs) > self.NUM_LINES:
+                                str(LINE_LENGTH) + "\nReached: " + str(len(s)) +
+                                "\nOffending line \"" + s + "\"")
+        if len(broken_strs) > NUM_LINES:
             logging.warning("Number of LCD lines exceeded.\n Max: " +
-                    str(self.NUM_LINES) + "\nReached: " + str(
+                            str(NUM_LINES) + "\nReached: " + str(
                 len(broken_strs)) +
-                    "\nOffending message: \"" + to_break + "\"")
+                            "\nOffending message: \"" + to_break + "\"")
 
         return broken_strs
