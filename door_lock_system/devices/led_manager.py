@@ -34,4 +34,14 @@ class LedManager:
         logging.info("Flashing Red LED")
         triple_blink(self._red_led)
 
+    def strobe(self, led: int = 0):
+        """Strobes an LED"""
+        if led:
+            led = Led(led)
+
+        led = self._red_led
+        led.blink(50, 0.01, 0.01)
+
+
+
 

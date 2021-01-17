@@ -3,6 +3,7 @@ from threading import Thread
 from typing import List
 
 from design_patterns.observer import Observer, Subject
+from devices.led_manager import LedManager
 from .log_record_manager import LogManager
 from devices.presenters import ConsolePresenter, Presenter
 from devices.reader import Reader
@@ -19,6 +20,7 @@ class RFIDLoginController(Subject):
     _presenter: Presenter
     _user_log_manager: LogManager
     _user_manager: UserManager
+    _led_manager: LedManager
 
     _observers: List[Observer] = []
 
@@ -28,12 +30,14 @@ class RFIDLoginController(Subject):
     _run_rfid_scanner: bool
 
     def __init__(self, reader: Reader,
+                 led_manager: LedManager,
                  presenter: Presenter = ConsolePresenter()):
         """Creates a new LoginManager with a certain presenter strategy"""
         self._security_manager = SecurityManager()
         self._reader = reader
         self._presenter = presenter
         self._user_log_manager = LogManager()
+        self._led_manager = led_manager
         self._user_manager = UserManager(presenter, self._reader,
                                          self._security_manager,
                                          self._user_log_manager)
@@ -61,6 +65,9 @@ class RFIDLoginController(Subject):
                 self.run_timed_processes()
                 self._presenter.print("User not cleared for access."
                                       " Contact the admin")
+            else:
+                self._led_manager.strobe()
+
 
     def add_new_user(self):
         """Adds a new user to the directory"""

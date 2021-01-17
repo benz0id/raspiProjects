@@ -26,7 +26,7 @@ rfid_reader = Reader()
 lock = Lock(stepper_motor, LOCK_DIRECTION, LOCK_TURNS, STEPPER_SPEED)
 led_m = LedManager(RED_LED_PIN, GREEN_LED_PIN)
 
-rfid_controller = RFIDLoginController(rfid_reader, presenter)
+rfid_controller = RFIDLoginController(rfid_reader, led_m, presenter)
 devices = DeviceController(lock, rfid_reader, presenter, led_m)
 button_thread = Thread(target=devices.poll_lock_button, args=[LOCK_BUTTON])
 button_thread.start()
