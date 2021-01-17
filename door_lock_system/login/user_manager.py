@@ -48,8 +48,7 @@ class UserManager:
     _presenter: Presenter
     _security_manager: SecurityManager
     _user_log_manager: LogManager
-
-    _recent_user: User
+    _recent_user: User or None
 
     def __init__(self, presenter: Presenter, reader: Reader, security_manager:
                  SecurityManager, user_log_manager: LogManager):
@@ -57,6 +56,7 @@ class UserManager:
         self._reader = reader
         self._security_manager = security_manager
         self._user_log_manager = user_log_manager
+        self._recent_user = None
 
     def check_for_user(self, input_data: str) -> bool or User:
         """Checks if the data is a valid users' data. Shows corresponding error
@@ -166,8 +166,12 @@ class UserManager:
                 i -= 1
                 login_str += tab + sign_ins[i].strftime("%b %d %Y %I:%M %p") + \
                              "\n"
+        return login_str
 
     def logged_in_cleared(self):
         """Returns whether the logged in user is cleared for access"""
-        return self._recent_user.has_access()
+        if self._recent_user:
+            return self._recent_user.has_access()
+        else:
+            return False
 
