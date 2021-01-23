@@ -35,8 +35,8 @@ class Reader:
                 sleep(0.2)
             except KeyboardInterrupt:
                 logging.exception("Keyboard Interrupt!")
-            print(tag_id, user_info)
+            # print(tag_id, user_info)
 
-        print("hit!")
+        # print("hit!")
 
         return user_info
