@@ -1,6 +1,7 @@
 import RPi.GPIO as GPIO
-from mfrc522 import SimpleMFRC522
+from mfrc522 import SimpleMFRC522, MFRC522
 import logging
+from time import sleep
 
 GPIO.setwarnings(False)
 
@@ -10,6 +11,8 @@ GPIO.setwarnings(False)
 
 class Reader:
     """Adapts the SimpleMFRC522 reader"""
+
+    reader_fxns = MFRC522()
     reader = SimpleMFRC522()
 
     def write(self, string: str):
@@ -24,11 +27,16 @@ class Reader:
     def read_data(self) -> str:
         """Reads the data input from the RFID"""
         user_info = ""
+        tag_id = 0
         while not user_info:
             try:
-                tag_id, user_info = self.reader.read()
-                # TODO add a logger for all tag_ids added
+                tag_id, user_info = self.reader.read_no_block()
+                self.reader_fxns.MFRC522_Reset()
+                sleep(0.2)
             except KeyboardInterrupt:
                 logging.exception("Keyboard Interrupt!")
+            print(tag_id, user_info)
+
+        print("hit!")
 
         return user_info
