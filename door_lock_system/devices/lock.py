@@ -78,7 +78,7 @@ class Lock(Device):
         """Causes the stepper to unlock the lock"""
         self._is_running = True
         self._stepper.turn(
-            self._lock_direction - 1,
+            not bool(self._lock_direction),
             self._stepper_speed,
             self._rotations_to_unlock)
         self._is_running = False
