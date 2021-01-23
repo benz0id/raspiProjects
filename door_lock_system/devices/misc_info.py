@@ -20,7 +20,7 @@ STEPPER_PINS = [19, 26, 16, 20]
 
 # The lock locks by moving in this direction (when looking up the shaft,
 # 0 -> counter clockwise, 1 -> clockwise).
-LOCK_DIRECTION = 1
+LOCK_DIRECTION = 0
 
 # The number of stepper turns required to unlock/unlock the lock
 LOCK_TURNS = 0.5
@@ -28,8 +28,8 @@ LOCK_TURNS = 0.5
 # The speed at which the stepper should rotate
 STEPPER_SPEED = 0.25
 
-RED_LED_PIN = 24
-GREEN_LED_PIN = 23
+RED_LED_PIN = 23
+GREEN_LED_PIN = 24
 
 LOCK_BUTTON = 14
 
